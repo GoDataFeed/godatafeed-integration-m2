@@ -21,6 +21,16 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 
 ## Release Notes
 
+### v1.1.0 update
+
+#### Enhancements
+
+        * This release does not add any new features
+
+#### Bug Fixes
+
+        *  Fixed 'type' filter for /product and /product/count
+        
 ### v1.0.0 launch
 
 #### Enhancements
