@@ -15,7 +15,7 @@
 * Extract the contents to */app/code* directory
   * Example: *tar -xvzf GoDataFeed.tar.gz -C ./app/code*
 
-* Enable the extension: *php -f bin/magento module:enable --clear-static-content GoDataFeed_Integration*
+* Enable the extension: *php -f bin/magento module:enable --clear-static-content GoDataFeed_Product_Integration*
 
 * Upgrade the Magento installation: *php -f bin/magento setup:upgrade*
 
@@ -52,4 +52,4 @@
 
 ### Uninstall
 
-* To completely disable the module, run: *php bin/magento module:disable GoDataFeed_Integration*
+* To completely disable the module, run: *php bin/magento module:disable GoDataFeed_Product_Integration*
