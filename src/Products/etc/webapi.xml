@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/godatafeed/getproduct/id/:id" method="GET">
+        <service class="GoDataFeed\Products\Api\ProductInterface" method="getProduct"/>
+        <resources>
+            <resource ref="Magento_Catalog::products" />
+        </resources>
+    </route>
+    <route url="/V1/godatafeed/products" method="GET">
+        <service class="GoDataFeed\Products\Api\ProductInterface" method="getProducts"/>
+        <resources>
+            <resource ref="Magento_Catalog::products" />
+        </resources>
+    </route>
+    <route url="/V1/godatafeed/products/count" method="GET">
+        <service class="GoDataFeed\Products\Api\ProductInterface" method="getProductsCount"/>
+        <resources>
+            <resource ref="Magento_Catalog::products" />
+        </resources>
+    </route>
+</routes>
