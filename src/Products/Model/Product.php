@@ -188,6 +188,7 @@ class Product implements ProductInterface
         }
 
         $productData['price'] = number_format($product->getFinalPrice(), '2', '.', '');
+	$productData['original_price'] = number_format($product->getPrice(), '2', '.', '');	    
         $productData['quantity'] = number_format($stockItem->getData('qty'), 0, '.', '');
         $productData['shipping_price'] = number_format($product->getShippingAmount(), 2, '.', '');
         $productData['special_from_date'] = $product->getSpecialFromDate();
