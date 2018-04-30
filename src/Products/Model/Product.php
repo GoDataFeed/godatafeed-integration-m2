@@ -138,23 +138,11 @@ class Product implements ProductInterface
         $productData['entity_id'] = $product->getId();
 
         $gallery_images = array();
-
-        // testing
-        $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/godatafeed.log');
-            $logger = new \Zend\Log\Logger();
-            $logger->addWriter($writer);
-            $logger->info("getMediaGalleryImages". $product->getSku() . "----- Id  ". $product->getMediaGalleryImages() );
-
-        if (($key = array_search($base_image_url, $gallery_images)) !== false) {
-            unset($gallery_images[$key]);
-        }
-
-        $productData['gallery_images'] = array_values($gallery_images);
         $images = $product->getMediaGalleryImages();
         $img = '';
         $sm = '';
         $tn = '';
-
+        
         foreach ($images as $image) {
             $gallery_images[] = $image->getUrl();
             if ($image->getMediaType() === 'image') {
@@ -168,6 +156,11 @@ class Product implements ProductInterface
             }
         }
 
+        if (($key = array_search($base_image_url, $gallery_images)) !== false) {
+            unset($gallery_images[$key]);
+        }
+
+        $productData['gallery_images'] = array_values($gallery_images);
         $productData['image_path'] = $img;
         $productData['image_url'] = $base_image_url;
         $productData['image_url_small'] = $sm;
@@ -205,7 +198,6 @@ class Product implements ProductInterface
         foreach ($attributes as $attribute) {
             $aType = $attribute->getFrontendInput();
             if ($aType === 'price') { // Get the price and the final price (after discounts)
-                //$attributeName = $attribute->getName();
                 $attributeName = $attribute->getAttributeCode();
                 $attributeValue_final = number_format($product->getFinalPrice(), '2', '.', '');
                 $attributeValue = number_format($product->getPrice(), '2', '.', '');	 
@@ -213,16 +205,11 @@ class Product implements ProductInterface
                 $productData[$attributeName.'_final'] = $attributeValue_final;
             }
             if ($aType === 'text' || $aType === 'textarea') {
-                // $attributeName = $attribute->getName();
-                // $attributeValue = $product->getData($attributeName);
-
                 $attributeName = $attribute->getAttributeCode();
                 $attributeValue = $attribute->getFrontend()->getValue($product);
-
                 $productData[$attributeName] = $attributeValue;
 	        }
             if ($aType === 'select' || $aType === 'multiselect' || $aType === 'boolean' || $aType === 'swatch_visual' || $aType === 'swatch_text') {
-                //$attributeName = $attribute->getName();
                 $attributeName = $attribute->getAttributeCode();
                 if ($attributeName != 'quantity_and_stock_status') {
                     $attributeValue = $product->getAttributeText($attributeName);
@@ -342,3 +329,4 @@ class Product implements ProductInterface
         return count($productCollection);
     }
 }
+
