@@ -139,6 +139,12 @@ class Product implements ProductInterface
 
         $gallery_images = array();
 
+        // testing
+        $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/godatafeed.log');
+            $logger = new \Zend\Log\Logger();
+            $logger->addWriter($writer);
+            $logger->info("getMediaGalleryImages". $product->getSku() . "----- Id  ". $product->getMediaGalleryImages() );
+
         if (($key = array_search($base_image_url, $gallery_images)) !== false) {
             unset($gallery_images[$key]);
         }
@@ -167,15 +173,6 @@ class Product implements ProductInterface
         $productData['image_url_small'] = $sm;
         $productData['image_url_thumbnail'] = $tn;
 
-        $stockItem = $this->stockRegistry->getStockItem($product->getId());
-
-        $productData['is_in_stock'] = $stockItem->getData('is_in_stock');
-        $productData['is_saleable'] = $product->getIsSalable();
-        $productData['keywords'] = $product->getMetaKeyword();
-        $productData['msrp'] = number_format($product->getMsrp(), '2', '.', ',');
-        $productData['news_from_date'] = $product->getNewsFromDate();
-        $productData['news_to_date'] = $product->getNewsToDate();
-
         if ($product->getTypeId() == "simple") {
             $parentIds = $objectManager->create('Magento\GroupedProduct\Model\Product\Type\Grouped')->getParentIdsByChild($product->getId());
             if (!$parentIds)
@@ -187,36 +184,52 @@ class Product implements ProductInterface
             }
         }
 
-        $productData['price'] = number_format($product->getFinalPrice(), '2', '.', '');
-	$productData['original_price'] = number_format($product->getPrice(), '2', '.', '');	    
-        $productData['quantity'] = number_format($stockItem->getData('qty'), 0, '.', '');
-        $productData['shipping_price'] = number_format($product->getShippingAmount(), 2, '.', '');
+        $stockItem = $this->stockRegistry->getStockItem($product->getId());
+
+        // Fields that aren't included in our attributes list
         $productData['special_from_date'] = $product->getSpecialFromDate();
         $productData['special_price'] = number_format($product->getSpecialPrice(), '2', '.', '');
         $productData['special_to_date'] = $product->getSpecialToDate();
         $productData['store_ids'] = implode(',', $product->getStoreIds());;
-        $productData['title'] = $product->getName();
-        $productData['type_id'] = $product->getTypeId();
+        $productData['is_in_stock'] = $stockItem->getData('is_in_stock');
+        $productData['is_saleable'] = $product->getIsSalable();
         $productData['url'] = $product->getUrlModel()->getUrl($product);
-        $productData['url_path'] = $product->getUrlKey();
         $productData['website_ids'] = implode(',', $product->getWebsiteIds());
         $productData['weight'] = number_format($product->getWeight(), '2', '.', '');
+        $productData['keywords'] = $product->getMetaKeyword();
+        $productData['msrp'] = number_format($product->getMsrp(), '2', '.', ',');
+        $productData['shipping_price'] = number_format($product->getShippingAmount(), 2, '.', '');
+        $productData['news_from_date'] = $product->getNewsFromDate();
+        $productData['news_to_date'] = $product->getNewsToDate();
 
         foreach ($attributes as $attribute) {
             $aType = $attribute->getFrontendInput();
+            if ($aType === 'price') { // Get the price and the final price (after discounts)
+                //$attributeName = $attribute->getName();
+                $attributeName = $attribute->getAttributeCode();
+                $attributeValue_final = number_format($product->getFinalPrice(), '2', '.', '');
+                $attributeValue = number_format($product->getPrice(), '2', '.', '');	 
+                $productData[$attributeName] = $attributeValue;
+                $productData[$attributeName.'_final'] = $attributeValue_final;
+            }
             if ($aType === 'text' || $aType === 'textarea') {
-                $attributeName = $attribute->getName();
-                $attributeValue = $product->getData($attributeName);
-                $productData[$attributeName . '_attribute'] = $attributeValue;
+                // $attributeName = $attribute->getName();
+                // $attributeValue = $product->getData($attributeName);
+
+                $attributeName = $attribute->getAttributeCode();
+                $attributeValue = $attribute->getFrontend()->getValue($product);
+
+                $productData[$attributeName] = $attributeValue;
 	        }
             if ($aType === 'select' || $aType === 'multiselect' || $aType === 'boolean' || $aType === 'swatch_visual' || $aType === 'swatch_text') {
-                $attributeName = $attribute->getName();
+                //$attributeName = $attribute->getName();
+                $attributeName = $attribute->getAttributeCode();
                 if ($attributeName != 'quantity_and_stock_status') {
                     $attributeValue = $product->getAttributeText($attributeName);
 		        if (is_object($attributeValue)) {
-                        $productData[$attributeName . '_attribute'] = (string)$attributeValue;
+                        $productData[$attributeName] = (string)$attributeValue;
                     } else {
-                        $productData[$attributeName . '_attribute'] = $attributeValue;
+                        $productData[$attributeName] = $attributeValue;
                     }
                 }
             }
