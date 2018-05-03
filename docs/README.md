@@ -1,4 +1,45 @@
-# Installation Instructions
+# Installation Instructions using Composer
+
+## Pre-installation steps
+
+* Create a backup of your shop before proceeding to install.
+
+### Manual Installation
+
+* Sign in to your server via SSH
+
+* *cd* into your Magento installation directory
+
+* Ensure <a href="https://getcomposer.org/" target=_blank>Composer</a> is installed. 
+	* See directions here: https://devdocs.magento.com/guides/v2.0/install-gde/prereq/integrator_install_composer.html
+
+* Ensure your Access Keys are setup and ready to use. Follow the steps here if you don't have them setup: https://devdocs.magento.com/guides/v2.0/install-gde/prereq/connect-auth.html
+
+* Ensure your credentials are setup. The official <a href="http://repo.magento.com/" target=_blank>http://repo.magento.com/</a> is private so you must authenticate. To use Composer, you can use auth.json file for authentication in your magento root directory, or place it in the <a href="https://getcomposer.org/doc/03-cli.md#composer-home" target=_blanks>COMPOSER_HOME</a> directory for better security.
+
+*The basic app.json file looks like this:*
+
+```json
+{
+    "http-basic": {
+        "repo.magento.com": {
+			"username": "<your public Magento Connect key>",
+			"password": "<your private Magento Connect key>"
+        }
+    }
+}
+```
+[For more instructions on setting up auth, click here.](For%20more%20instructions,%20see%20https://devdocs.magento.com/guides/v2.0/install-gde/prereq/dev_install.html#instgde-prereq-compose-clone-auth)
+
+ * Checkout the GoDataFeed extension from https://marketplace.magento.com.
+ * Once you have checked out, go to My Profile > My Products > My Purchases. Look for GoDataFeed and click on Technical details.
+ * Run the following commands:
+ * `composer require godatafeed/godatafeed-product-integration-module:<Component version> --no-update`
+ * `composer update`
+ * `php bin/magento setup:upgrade`
+ * `php bin/magento setup:di:compile`
+ 
+ # Installation Instructions via FTP
 
 ## Pre-installation steps
 
