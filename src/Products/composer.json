@@ -3,7 +3,7 @@
     "license": "Apache-2.0",
     "description": "Official Magento2 Plugin to integrate your products with GoDataFeed",
     "type": "magento2-module",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "autoload": {
         "files": ["registration.php"],
         "psr-4": {
