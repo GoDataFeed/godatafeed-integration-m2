@@ -1,3 +1,4 @@
+
 # Installation Instructions using Composer
 
 ## Pre-installation steps
@@ -65,7 +66,7 @@
 
 * Compile the Magento installation: *php -f bin/magento setup:di:compile*
 
-### Configuration
+# Configuration
 
 * Login to your Magento Admin Dashboard
 
@@ -94,6 +95,6 @@
   * Copy the *store_id* value which will be visible in the URL
     * Example URL: *http://www.your_magento_store.com/admin/system_store/editStore/store_id/**4**/key*
 
-### Uninstall
+# Uninstall
 
 * To completely disable the module, run: *php bin/magento module:disable GoDataFeed_Product_Integration*
