@@ -99,3 +99,6 @@
 # Uninstall
 
 * To completely disable the module, run: *php bin/magento module:disable GoDataFeed_Product_Integration*
+
+# Troubleshooting
+ * [Visit our help center for troubleshooting or more information.](https://help.godatafeed.com/hc/en-us/sections/115000914112)
