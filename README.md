@@ -21,6 +21,19 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 
 ## Release Notes
 
+
+### v1.4.0 update
+
+#### Enhancements
+
+        * Removed the _attribute suffix
+        * Refactored to pull all attributes include price
+        * Updated to pull any price field with _final as well to get the discounts applied
+
+#### Bug Fixes
+
+        * This release does not fix any bugs
+        
 ### v1.3.0 update
 
 #### Enhancements
