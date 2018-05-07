@@ -1,4 +1,5 @@
 
+
 # Installation Instructions using Composer
 
 ## Pre-installation steps
@@ -55,7 +56,7 @@
 
 * *cd* into your Magento installation directory
 
-* Upload *GoDataFeed.tar.gz* into your Magento installation directory
+* Upload *[GoDataFeed.tar.gz](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/latest)* into your Magento installation directory
 
 * Extract the contents to */app/code* directory
   * Example: *tar -xvzf GoDataFeed.tar.gz -C ./app/code*
