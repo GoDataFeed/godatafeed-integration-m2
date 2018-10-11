@@ -21,7 +21,16 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 
 ## Release Notes
 
+### v1.4.0 update
 
+#### Enhancements
+
+        * This release does not have any enhancements
+
+#### Bug Fixes
+
+        * Added quantity field back in
+        
 ### v1.4.0 update
 
 #### Enhancements
