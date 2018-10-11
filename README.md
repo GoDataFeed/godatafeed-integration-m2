@@ -21,7 +21,7 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 
 ## Release Notes
 
-### v1.4.0 update
+### v1.4.1 update
 
 #### Enhancements
 
