@@ -185,6 +185,7 @@ class Product implements ProductInterface
         $productData['special_to_date'] = $product->getSpecialToDate();
         $productData['store_ids'] = implode(',', $product->getStoreIds());;
         $productData['is_in_stock'] = $stockItem->getData('is_in_stock');
+        $productData['quantity'] = number_format($stockItem->getData('qty'), 0, '.', '');
         $productData['is_saleable'] = $product->getIsSalable();
         $productData['url'] = $product->getUrlModel()->getUrl($product);
         $productData['website_ids'] = implode(',', $product->getWebsiteIds());
