@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2018 Method Merchant, LLC or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,8 +13,19 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-use Magento\Framework\Component\ComponentRegistrar;
-$registrar = new ComponentRegistrar();
-if ($registrar->getPath(ComponentRegistrar::MODULE, 'GoDataFeed_Product_Integration') === null) {
-    ComponentRegistrar::register(ComponentRegistrar::MODULE, 'GoDataFeed_Product_Integration', __DIR__);
+
+namespace GoDataFeed\FeedManagement\Model\Product;
+
+interface ValidatorInterface
+{
+    /**
+     * Method validates request params
+     * Either returns TRUE (success) or throws error (validation failed)
+     *
+     * @param array $params
+     *
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @return boolean
+     */
+    public function validate(array $params);
 }

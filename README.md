@@ -21,6 +21,14 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 
 ## Release Notes
 
+### v2.0.0 update
+
+#### New Release
+
+        * This is a rewrite and new release
+		* Fixed issues with custom fields as price with incorrect prices
+
+		
 ### v1.4.1 update
 
 #### Enhancements
