@@ -21,7 +21,7 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 
 ## Release Notes
 
-### v2.0.0 update
+### v2.0.1 update
 
 #### New Release
 
