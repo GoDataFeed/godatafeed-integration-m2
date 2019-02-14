@@ -24,7 +24,7 @@ interface ProductInterface
      *
      * @param string $id of the param.
      *
-     * @return array - list of the information about the product as the param Value array.
+     * @return mixed - list of the information about the product as the param Value array.
      * @throws \Exception
      */
     public function getProduct($id);
@@ -40,7 +40,7 @@ interface ProductInterface
      * order_field
      * order_direction
      *
-     * @return array - list of the information about the products as the param Value array.
+     * @return mixed - list of the information about the products as the param Value array.
      * @throws \Exception
      */
     public function getProducts();
