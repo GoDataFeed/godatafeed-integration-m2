@@ -24,8 +24,8 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 ### v2.0.2 update
 
 ### Bug Fixes
-Fixed issue during installation, some users received the following exception:
-"Message: Class "array" does not exist. Please note that namespace must be specified"
+        * Fixed issue during installation, some users received the following exception:
+                "Message: Class "array" does not exist. Please note that namespace must be specified"
 
 ### v2.0.1 update
 
