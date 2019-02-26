@@ -21,7 +21,7 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 
 ## Release Notes
 
-### [v2.0.2 update|https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.2]
+### [v2.0.2 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.2)
 
 ### Bug Fixes
         * Fixed issue during installation, some users received the following exception:
