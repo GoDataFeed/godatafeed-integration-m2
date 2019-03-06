@@ -14,11 +14,14 @@
  * permissions and limitations under the License.
  */
 namespace GoDataFeed\FeedManagement\Model\Product;
-
+/**
+ * Interface ResponseCreatorInterface responsible for creation responces with different formats
+ * @package GoDataFeed\FeedManagement\Model\Product
+ */
 interface ResponseCreatorInterface
 {
     /**
-     * Method creates response in proper format.
+     * Method creates response in proper format using productsData.
      * @param string $type
      * @param array  $inputParams
      *

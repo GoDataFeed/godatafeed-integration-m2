@@ -25,11 +25,13 @@ use Magento\Eav\Api\AttributeSetRepositoryInterface;
 use Magento\Framework\UrlInterface;
 use Magento\GroupedProduct\Model\Product\Type\GroupedFactory;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Catalog\Model\ResourceModel\Product\Collection;
+use Magento\Catalog\Api\Data\ProductInterface;
 
 /**
  * Class ResponseCreator encapsulates logic connected with the response format.
  * @package GoDataFeed\FeedManagement\Model
- * @author akozyr
+ * @author  akozyr
  */
 class ResponseCreator implements ResponseCreatorInterface
 {
@@ -88,7 +90,8 @@ class ResponseCreator implements ResponseCreatorInterface
         ConfigurableFactory $configurableFactory,
         ProductRepositoryInterface $productRepository,
         ProductAttributeCollection $productAttributeCollectionFactory
-    ) {
+    )
+    {
         $this->attributeSetRepository = $attributeSetRepositoryInterface;
         $this->categoryRepository = $categoryRepositoryInterface;
         $this->storeManager = $storeManagerInterface;
@@ -102,18 +105,18 @@ class ResponseCreator implements ResponseCreatorInterface
     /**
      * @inheritdoc
      */
-    public function createResponse($type, array $products)
+    public function createResponse($type, array $productsData)
     {
         $response = [];
         switch ($type) {
             case 'getProduct':
-                $response = $this->createProductResponse($products[0]);
+                $response = $this->createProductResponse($productsData[0]);
                 break;
             case 'getProducts':
-                $response = $this->createProductsResponse($products);
+                $response = $this->createProductsResponse($productsData[0]);
                 break;
             case 'getProductsCount':
-                $response = $this->createProductsCountResponse($products);
+                $response = $this->createProductsCountResponse($productsData[0]);
                 break;
             default:
                 break;
@@ -125,12 +128,12 @@ class ResponseCreator implements ResponseCreatorInterface
     /**
      * Method creates response for one product API request
      *
-     * @param $product
+     * @param ProductInterface $product
      *
      * @return array|mixed
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function createProductResponse($product)
+    private function createProductResponse(ProductInterface $product)
     {
         return $this->prepareResponseData($product);
     }
@@ -138,14 +141,17 @@ class ResponseCreator implements ResponseCreatorInterface
     /**
      * Method creates response for list of products API request
      *
-     * @param $products
+     * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $products
      *
      * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function createProductsResponse($products)
+    private function createProductsResponse(Collection $productsCollection)
     {
         $preparedProducts = [];
+        $productsCollection->addAttributeToSelect('*');
+        $productsCollection->addMediaGalleryData();
+        $products = $productsCollection->getItems();
         foreach ($products as $product) {
             $preparedProducts[] = $this->prepareResponseData($product);
         }
@@ -156,13 +162,13 @@ class ResponseCreator implements ResponseCreatorInterface
     /**
      * Method creates response for product's amount API request
      *
-     * @param $products
+     * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $productsCollection
      *
      * @return int
      */
-    private function createProductsCountResponse($products)
+    private function createProductsCountResponse(Collection $productsCollection)
     {
-        return count($products);
+        return $productsCollection->getSize();
     }
 
     /**
@@ -173,7 +179,7 @@ class ResponseCreator implements ResponseCreatorInterface
      * @return array|mixed
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function prepareResponseData($product)
+    private function prepareResponseData(ProductInterface $product)
     {
         $productData = [];
         $productData = $this->prepareBasicParams($product, $productData);
@@ -188,13 +194,13 @@ class ResponseCreator implements ResponseCreatorInterface
     /**
      * Method retrieves and forms information about category of the product for response
      *
-     * @param       $product
-     * @param array $productData
+     * @param ProductInterface $product
+     * @param array            $productData
      *
      * @return array
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function prepareCategoryParams($product, array $productData)
+    private function prepareCategoryParams(ProductInterface $product, array $productData)
     {
         $categoryIds = $product->getCategoryIds();
         $categoryName = [];
@@ -225,55 +231,43 @@ class ResponseCreator implements ResponseCreatorInterface
     /**
      * Method responsible for the image params allocating
      *
-     * @param       $product
-     * @param array $productData
+     * @param ProductInterface $product
+     * @param array            $productData
      *
      * @return mixed
      */
-    private function prepareImageParams($product, array $productData)
+    private function prepareImageParams(ProductInterface $product, array $productData)
     {
-        $baseImageUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . 'catalog/product'
-            . $product->getImage();
-        //for 2.0.* compatibility
-        $product->load($product->getId());
-        $images = $product->getMediaGalleryImages();
-        $img = $sm = $tn = '';
+        $imgFolder = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . 'catalog/product';
+        $baseImageUrl = $imgFolder . $product->getImage();
         $galleryImages = [];
+        $images = $product->getMediaGalleryImages();
         if ($images) {
             foreach ($images as $image) {
                 $galleryImages[] = $image->getUrl();
-                if ($image->getMediaType() === 'image') {
-                    $img = $image->getFile();
-                }
-                if ($image->getMediaType() === 'small_image') {
-                    $sm = $image->getFile();
-                }
-                if ($image->getMediaType() === 'thumbnail') {
-                    $tn = $image->getFile();
-                }
             }
         }
         if (($key = array_search($baseImageUrl, $galleryImages)) !== false) {
             unset($galleryImages[$key]);
         }
-
         $productData['gallery_images'] = array_values($galleryImages);
-        $productData['image_path'] = $img;
+
+        $productData['image_path'] = $baseImageUrl;
         $productData['image_url'] = $baseImageUrl;
-        $productData['image_url_small'] = $sm;
-        $productData['image_url_thumbnail'] = $tn;
+        $productData['image_url_small'] = $imgFolder.$product->getSmallImage();
+        $productData['image_url_thumbnail'] = $imgFolder.$product->getThumbnail();
         return $productData;
     }
 
     /**
      * Method adds to response all customer created attributes.
      *
-     * @param       $product
-     * @param array $productData
+     * @param ProductInterface $product
+     * @param array            $productData
      *
      * @return mixed
      */
-    private function prepareAdditionalAttributesParams($product, array $productData)
+    private function prepareAdditionalAttributesParams(ProductInterface $product, array $productData)
     {
         $productAttributes = $this->productAttributeCollectionFactory->create()->load();
         foreach ($productAttributes as $attribute) {
@@ -289,7 +283,7 @@ class ResponseCreator implements ResponseCreatorInterface
                 $attributeValue = $product->getData($attributeName);
                 $productData[$attributeName] = $attributeValue;
             }
-            
+
             if (in_array($aType, ['select', 'multiselect', 'boolean', 'swatch_visual', 'swatch_text'])
                 && $attributeName != 'quantity_and_stock_status') {
                 $attributeValue = $product->getAttributeText($attributeName);
@@ -302,13 +296,13 @@ class ResponseCreator implements ResponseCreatorInterface
     /**
      * Method forms parent SKUs for simple product in case the simple product is part of some composite product type
      *
-     * @param       $product
-     * @param array $productData
+     * @param  ProductInterface $product
+     * @param array             $productData
      *
      * @return mixed
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function prepareParentSkuParams($product, array $productData)
+    private function prepareParentSkuParams(ProductInterface $product, array $productData)
     {
         if ($product->getTypeId() == "simple") {
             $parentIds = $this->groupedFactory->create()->getParentIdsByChild($product->getId());
@@ -327,12 +321,12 @@ class ResponseCreator implements ResponseCreatorInterface
     /**
      * Method adds information about child products for configurable type of the product
      *
-     * @param       $product
-     * @param array $productData
+     * @param ProductInterface $product
+     * @param array            $productData
      *
      * @return mixed
      */
-    private function prepareChildSkuParams($product, array $productData)
+    private function prepareChildSkuParams(ProductInterface $product, array $productData)
     {
         $associatedIds = [];
         if ($product->getTypeId() == 'configurable') {
@@ -348,13 +342,13 @@ class ResponseCreator implements ResponseCreatorInterface
     /**
      * Method responsible for adding basic attributes (static that belongs to the product entity) to the response.
      *
-     * @param       $product
-     * @param array $productData
+     * @param  ProductInterface $product
+     * @param array             $productData
      *
      * @return mixed
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function prepareBasicParams($product, array $productData)
+    private function prepareBasicParams(ProductInterface $product, array $productData)
     {
         $productData['attribute_set_id'] = $product->getAttributeSetId();
         $attributeSetRepository = $this->attributeSetRepository->get($product->getAttributeSetId());

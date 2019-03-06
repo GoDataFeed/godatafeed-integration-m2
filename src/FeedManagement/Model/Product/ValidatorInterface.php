@@ -15,7 +15,10 @@
  */
 
 namespace GoDataFeed\FeedManagement\Model\Product;
-
+/**
+ * Interface ValidatorInterface responsible for input params validation
+ * @package GoDataFeed\FeedManagement\Model\Product
+ */
 interface ValidatorInterface
 {
     /**
