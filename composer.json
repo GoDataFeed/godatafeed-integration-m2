@@ -1,0 +1,17 @@
+{
+    "name": "godatafeed/feed-management",
+    "description": "Official Magento2 Plugin to integrate your products with GoDataFeed",
+    "type": "magento2-module",
+    "license": "Apache-2.0",
+    "require": {
+        "php": ">=5.6.5",
+        "magento/framework": "^100.1.0|101.0.*|^102.0.0"
+    },
+    "version": "2.0.2",
+    "autoload": {
+        "files": ["src/FeedManagement/registration.php"],
+        "psr-4": {
+            "GoDataFeed\\FeedManagement\\": "src/FeedManagement"
+        }
+    }
+}

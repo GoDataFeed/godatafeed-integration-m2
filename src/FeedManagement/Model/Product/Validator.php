@@ -231,8 +231,8 @@ class Validator implements ValidatorInterface
         if (array_key_exists('order_direction', $params) && !array_key_exists('order_field', $params)) {
             throw new LocalizedException(__("Oder direction parameter cannot be used without order by field"));
         }
-        if (array_key_exists('order_direction', $params) && !in_array($params['order_direction'], ['ASC', 'DESC'])) {
-            throw new LocalizedException(__("Order direction parameter should be one of the value: ASC or DESC. Your value: '{$params['order_direction']}'"));
+        if (array_key_exists('order_direction', $params) && !in_array($params['order_direction'], ['ASC', 'DESC', 'asc', 'desc'])) {
+            throw new LocalizedException(__("Order direction parameter should be one of the value: ASC, DESC, asc, desc. Your value: '{$params['order_direction']}'"));
         }
         if (array_key_exists('limit', $params)) {
             if ($params['limit'] > self::DEFAULT_PAGE_SIZE_MAX) {
