@@ -16,7 +16,9 @@
  */
 
 namespace GoDataFeed\FeedManagement\Api;
-
+/**
+ * API interface for product export to GDF
+ */
 interface ProductInterface
 {
     /**
