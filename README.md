@@ -21,6 +21,13 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 
 ## Release Notes
 
+### [v2.0.3 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.3)
+
+#### Enhancements 
+        * The module can be installed from GitHub via composer
+        * Performance Optimizations
+        * Module successfully tested at Magento Open Source 2.3.0
+
 ### [v2.0.2 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.2)
 
 ### Bug Fixes
