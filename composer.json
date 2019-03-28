@@ -1,5 +1,5 @@
 {
-    "name": "godatafeed/feed-management",
+    "name": "godatafeed/godatafeed-feed-management",
     "description": "Official Magento2 Plugin to integrate your products with GoDataFeed",
     "type": "magento2-module",
     "license": "Apache-2.0",
