@@ -11,7 +11,7 @@
     "autoload": {
         "files": ["src/FeedManagement/registration.php"],
         "psr-4": {
-            "GoDataFeed\\FeedManagement\\": "src/FeedManagement"
+            "GoDataFeed\\FeedManagement\\": ""
         }
     }
 }
