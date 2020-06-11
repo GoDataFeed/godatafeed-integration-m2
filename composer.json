@@ -9,7 +9,9 @@
     },
     "version": "2.0.3",
     "autoload": {
-        "files": ["src/FeedManagement/registration.php"],
+        "files": [
+            "registration.php"
+        ],
         "psr-4": {
             "GoDataFeed\\FeedManagement\\": ""
         }
