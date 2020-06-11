@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2018 Method Merchant, LLC or its affiliates. All Rights Reserved.
  *
@@ -32,13 +33,22 @@ use GoDataFeed\FeedManagement\Model\Product\ResponseCreatorInterface;
 
 /**
  * Class Product encapsulates logic for webapi requests handling.
- * @package GoDataFeed\FeedManagement\Model
  * @author  akozyr
+ *
+ * @SuppressWarnings(PHPMD.ShortVariable)
+ * @SuppressWarnings(PHPMD.LongVariable)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(PHPMD.UndefinedVariable)
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.NPathComplexity)
+ * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+ *
  */
 class Product implements ProductInterface
 {
-    const DEFAULT_PAGE_NUMBER = 1;
-    const DEFAULT_PAGE_SIZE = 50;
+    public const DEFAULT_PAGE_NUMBER = 1;
+    public const DEFAULT_PAGE_SIZE = 50;
 
     /**
      * Input params that can be get from the requests;
@@ -154,8 +164,7 @@ class Product implements ProductInterface
         LoggerInterface $logger,
         ProductMetadataInterface $metdata,
         ProductTypeListInterface $productTypeListInterface
-    )
-    {
+    ) {
         $this->request = $request;
         $this->validator = $validator;
         $this->responseCreator = $responseCreator;
@@ -168,7 +177,6 @@ class Product implements ProductInterface
         $this->metdata = $metdata;
         $this->logger = $logger;
         $this->productTypeList = $productTypeListInterface;
-
     }
 
     /**
@@ -220,7 +228,10 @@ class Product implements ProductInterface
         try {
             if ($this->validator->validate($filteredParams)) {
                 $filteredParams = $this->updateTypesFilter($filteredParams);
-                $result = $this->responseCreator->createResponse(__FUNCTION__, [$this->getCollection($filteredParams, false)]);
+                $result = $this->responseCreator->createResponse(
+                    __FUNCTION__,
+                    [$this->getCollection($filteredParams, false)]
+                );
             }
         } catch (\Exception $e) {
             $this->logger->addError($e->getMessage());

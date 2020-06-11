@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2018 Method Merchant, LLC or its affiliates. All Rights Reserved.
  *
@@ -13,19 +14,9 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-namespace GoDataFeed\FeedManagement\Model\Product;
-/**
- * Interface ResponseCreatorInterface responsible for creation responces with different formats
- * @package GoDataFeed\FeedManagement\Model\Product
- */
-interface ResponseCreatorInterface
-{
-    /**
-     * Method creates response in proper format using productsData.
-     * @param string $type
-     * @param array  $inputParams
-     *
-     * @return array
-     */
-    public function createResponse($type, array $inputParams);
-}
+
+\Magento\Framework\Component\ComponentRegistrar::register(
+    \Magento\Framework\Component\ComponentRegistrar::MODULE,
+    'GoDataFeed_FeedManagement',
+    __DIR__
+);

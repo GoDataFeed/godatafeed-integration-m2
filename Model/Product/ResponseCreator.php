@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2018 Method Merchant, LLC or its affiliates. All Rights Reserved.
  *
@@ -30,8 +31,9 @@ use Magento\Catalog\Api\Data\ProductInterface;
 
 /**
  * Class ResponseCreator encapsulates logic connected with the response format.
- * @package GoDataFeed\FeedManagement\Model
  * @author  akozyr
+ *
+ * @SuppressWarnings(PHPMD.LongVariable)
  */
 class ResponseCreator implements ResponseCreatorInterface
 {
@@ -71,17 +73,16 @@ class ResponseCreator implements ResponseCreatorInterface
     /**
      * ResponseCreator constructor.
      *
-     * @param \Magento\Eav\Api\AttributeSetRepositoryInterface                                  $attributeSetRepositoryInterface
-     * @param \Magento\Catalog\Api\CategoryRepositoryInterface                                  $categoryRepositoryInterface
-     * @param \Magento\Store\Model\StoreManagerInterface                                        $storeManagerInterface
-     * @param \Magento\CatalogInventory\Api\StockRegistryInterface                              $stockRegistryInterface
-     * @param \Magento\GroupedProduct\Model\Product\Type\GroupedFactory                         $groupedFactory
-     * @param \Magento\ConfigurableProduct\Model\ResourceModel\Product\Type\ConfigurableFactory $configurableFactory
-     * @param \Magento\Catalog\Api\ProductRepositoryInterface                                   $productRepository
-     * @param \Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory          $productAttributeCollectionFactory
+     * @param AttributeSetRepositoryInterface $attributeSetRepositoryInterface
+     * @param CategoryRepositoryInterface $categoryRepositoryInterface
+     * @param StoreManagerInterface $storeManagerInterface
+     * @param StockRegistryInterface $stockRegistryInterface
+     * @param GroupedFactory $groupedFactory
+     * @param ConfigurableFactory $configurableFactory
+     * @param ProductRepositoryInterface $productRepository
+     * @param ProductAttributeCollection $productAttributeCollectionFactory
      */
     public function __construct(
-
         AttributeSetRepositoryInterface $attributeSetRepositoryInterface,
         CategoryRepositoryInterface $categoryRepositoryInterface,
         StoreManagerInterface $storeManagerInterface,
@@ -90,8 +91,7 @@ class ResponseCreator implements ResponseCreatorInterface
         ConfigurableFactory $configurableFactory,
         ProductRepositoryInterface $productRepository,
         ProductAttributeCollection $productAttributeCollectionFactory
-    )
-    {
+    ) {
         $this->attributeSetRepository = $attributeSetRepositoryInterface;
         $this->categoryRepository = $categoryRepositoryInterface;
         $this->storeManager = $storeManagerInterface;
@@ -247,15 +247,16 @@ class ResponseCreator implements ResponseCreatorInterface
                 $galleryImages[] = $image->getUrl();
             }
         }
-        if (($key = array_search($baseImageUrl, $galleryImages)) !== false) {
+        $key = array_search($baseImageUrl, $galleryImages);
+        if ($key !== false) {
             unset($galleryImages[$key]);
         }
         $productData['gallery_images'] = array_values($galleryImages);
 
         $productData['image_path'] = $baseImageUrl;
         $productData['image_url'] = $baseImageUrl;
-        $productData['image_url_small'] = $imgFolder.$product->getSmallImage();
-        $productData['image_url_thumbnail'] = $imgFolder.$product->getThumbnail();
+        $productData['image_url_small'] = $imgFolder . $product->getSmallImage();
+        $productData['image_url_thumbnail'] = $imgFolder . $product->getThumbnail();
         return $productData;
     }
 
@@ -267,6 +268,7 @@ class ResponseCreator implements ResponseCreatorInterface
      *
      * @return mixed
      */
+    // @codingStandardsIgnoreStart
     private function prepareAdditionalAttributesParams(ProductInterface $product, array $productData)
     {
         $productAttributes = $this->productAttributeCollectionFactory->create()->load();
@@ -284,14 +286,17 @@ class ResponseCreator implements ResponseCreatorInterface
                 $productData[$attributeName] = $attributeValue;
             }
 
-            if (in_array($aType, ['select', 'multiselect', 'boolean', 'swatch_visual', 'swatch_text'])
-                && $attributeName != 'quantity_and_stock_status') {
+            if (
+                in_array($aType, ['select', 'multiselect', 'boolean', 'swatch_visual', 'swatch_text']) &&
+                $attributeName != 'quantity_and_stock_status'
+            ) {
                 $attributeValue = $product->getAttributeText($attributeName);
                 $productData[$attributeName] = is_object($attributeValue) ? (string)$attributeValue : $attributeValue;
             }
         }
         return $productData;
     }
+    // @codingStandardsIgnoreEnd
 
     /**
      * Method forms parent SKUs for simple product in case the simple product is part of some composite product type
@@ -371,7 +376,7 @@ class ResponseCreator implements ResponseCreatorInterface
         $productData['special_from_date'] = $product->getSpecialFromDate();
         $productData['special_price'] = number_format($product->getSpecialPrice(), '2', '.', '');
         $productData['special_to_date'] = $product->getSpecialToDate();
-        $productData['store_ids'] = implode(',', $product->getStoreIds());;
+        $productData['store_ids'] = implode(',', $product->getStoreIds());
         $productData['title'] = $product->getName();
         $productData['type_id'] = $product->getTypeId();
         $productData['url'] = $product->getUrlModel()->getUrl($product);
@@ -380,5 +385,4 @@ class ResponseCreator implements ResponseCreatorInterface
         $productData['weight'] = number_format($product->getWeight(), '2', '.', '');
         return $productData;
     }
-
 }

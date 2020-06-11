@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2018 Method Merchant, LLC or its affiliates. All Rights Reserved.
  *
@@ -14,19 +15,19 @@
  * permissions and limitations under the License.
  */
 
-use Magento\TestFramework\Helper\Bootstrap;
+namespace GoDataFeed\FeedManagement\Model\Product;
 
-/** @var \Magento\Framework\Registry $registry */
-$registry = Bootstrap::getObjectManager()->get(\Magento\Framework\Registry::class);
-
-$registry->unregister('isSecureArea');
-$registry->register('isSecureArea', true);
-
-/** @var $product \Magento\Catalog\Model\Product */
-$product = Bootstrap::getObjectManager()->create(\Magento\Catalog\Model\Product::class);
-$product->load(222);
-if ($product->getId()) {
-    $product->delete();
+/**
+ * Interface ResponseCreatorInterface responsible for creation responces with different formats
+ */
+interface ResponseCreatorInterface
+{
+    /**
+     * Method creates response in proper format using productsData.
+     * @param string $type
+     * @param array  $inputParams
+     *
+     * @return array
+     */
+    public function createResponse($type, array $inputParams);
 }
-$registry->unregister('isSecureArea');
-$registry->register('isSecureArea', false);

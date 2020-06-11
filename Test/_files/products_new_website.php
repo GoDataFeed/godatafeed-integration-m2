@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2018 Method Merchant, LLC or its affiliates. All Rights Reserved.
  *
@@ -19,7 +20,6 @@ use Magento\Catalog\Model\Product\Type;
 use Magento\Catalog\Model\Product\Visibility;
 use Magento\TestFramework\Helper\Bootstrap;
 use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
-
 
 /** @var Magento\TestFramework\ObjectManager $objectManager */
 $objectManager = Bootstrap::getObjectManager();
@@ -107,5 +107,3 @@ $productTwo->setTypeId(Configurable::TYPE_CODE)
     ->setStatus(Status::STATUS_ENABLED)
     ->setStockData(['use_config_manage_stock' => 1, 'is_in_stock' => 1])
     ->save();
-
-

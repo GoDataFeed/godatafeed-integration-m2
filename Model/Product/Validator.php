@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2018 Method Merchant, LLC or its affiliates. All Rights Reserved.
  *
@@ -24,24 +25,27 @@ use Magento\Framework\Message\ManagerInterface;
 
 /**
  * Class Validator responsible for input params validation
- * @package GoDataFeed\FeedManagement\Model\Product
  * @author akozyr
+ *
+ * @SuppressWarnings(PHPMD.LongVariable)
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.NPathComplexity)
  */
 class Validator implements ValidatorInterface
 {
-    const DEFAULT_PAGE_SIZE_MAX = 250;
+    public const DEFAULT_PAGE_SIZE_MAX = 250;
     /**
      * [0-9]
      */
-    const TYPE_NUMERIC = 'numeric';
+    public const TYPE_NUMERIC = 'numeric';
     /**
      * [azAZ0-9]
      */
-    const TYPE_ALPHANUMERIC = 'alphanumeric';
+    public const TYPE_ALPHANUMERIC = 'alphanumeric';
     /**
      * [azAZ0-9_]
      */
-    const TYPE_EXD_ALPHANUMERIC = 'exd_alphanumeric';
+    public const TYPE_EXD_ALPHANUMERIC = 'exd_alphanumeric';
 
     /**
      * @var \Magento\Eav\Api\AttributeRepositoryInterface
@@ -163,10 +167,12 @@ class Validator implements ValidatorInterface
      * @return bool
      * @throws \Exception
      */
+    // @codingStandardsIgnoreStart
     private function basicValidation(array $params)
     {
         foreach ($params as $key => $value) {
-            if (!$this->isValidType($this->rules[$key]['type'], $value)
+            if (
+                !$this->isValidType($this->rules[$key]['type'], $value)
                 || $this->rules[$key]['min_length'] > strlen($value)
                 || $this->rules[$key]['max_length'] < strlen($value)
                 || !($value >= $this->rules[$key]['min_value'])
@@ -176,6 +182,7 @@ class Validator implements ValidatorInterface
         }
         return true;
     }
+    // @codingStandardsIgnoreEnd
 
     /**
      * Checks type of the value.
@@ -211,9 +218,9 @@ class Validator implements ValidatorInterface
      * @return bool|array
      * @throws \Exception
      */
+    // @codingStandardsIgnoreStart
     private function extraValidation(array $params)
     {
-
         if (array_key_exists('type_id', $params) && !$this->isProductType($params['type_id'])) {
             throw new LocalizedException(__("There is no such product type: Your value: '{$params['type_id']}'"));
         }
@@ -225,23 +232,38 @@ class Validator implements ValidatorInterface
         }
         if (array_key_exists('order_field', $params)) {
             if (!$this->isCorrectOrderField($params['order_field'])) {
-                throw new LocalizedException(__("There is no such field to sort by, field: '{$params['order_field']}'"));
+                throw new LocalizedException(
+                    __("There is no such field to sort by, field: '{$params['order_field']}'")
+                );
             }
         }
         if (array_key_exists('order_direction', $params) && !array_key_exists('order_field', $params)) {
             throw new LocalizedException(__("Oder direction parameter cannot be used without order by field"));
         }
-        if (array_key_exists('order_direction', $params) && !in_array($params['order_direction'], ['ASC', 'DESC', 'asc', 'desc'])) {
-            throw new LocalizedException(__("Order direction parameter should be one of the value: ASC, DESC, asc, desc. Your value: '{$params['order_direction']}'"));
+        if (
+            array_key_exists('order_direction', $params) &&
+            !in_array($params['order_direction'], ['ASC', 'DESC', 'asc', 'desc'])
+        ) {
+            throw new LocalizedException(
+                __(
+                    "Order direction parameter should be one of the value: ASC, DESC, asc, desc. Your value: '{$params['order_direction']}'"
+                )
+            );
         }
         if (array_key_exists('limit', $params)) {
             if ($params['limit'] > self::DEFAULT_PAGE_SIZE_MAX) {
-                throw new LocalizedException(__("The paging limit exceeds the allowed number '" . self::DEFAULT_PAGE_SIZE_MAX
-                    . "' : Your value: '{$params['limit']}'"));
+                throw new LocalizedException(
+                    __(
+                        "The paging limit exceeds the allowed number '"
+                        . self::DEFAULT_PAGE_SIZE_MAX
+                        . "' : Your value: '{$params['limit']}'"
+                    )
+                );
             }
         }
         return true;
     }
+    // @codingStandardsIgnoreEnd
 
     /**
      * Checks if requested product type exist.
@@ -282,5 +304,4 @@ class Validator implements ValidatorInterface
 
         return true;
     }
-
 }

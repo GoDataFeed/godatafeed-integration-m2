@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2018 Method Merchant, LLC or its affiliates. All Rights Reserved.
  *
@@ -15,9 +16,9 @@
  */
 
 namespace GoDataFeed\FeedManagement\Model\Product;
+
 /**
  * Interface ValidatorInterface responsible for input params validation
- * @package GoDataFeed\FeedManagement\Model\Product
  */
 interface ValidatorInterface
 {

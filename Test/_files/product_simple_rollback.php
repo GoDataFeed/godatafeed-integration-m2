@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2018 Method Merchant, LLC or its affiliates. All Rights Reserved.
  *
@@ -13,6 +14,7 @@
  * express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
+
 use Magento\TestFramework\Helper\Bootstrap;
 
 /** @var \Magento\Framework\Registry $registry */
@@ -21,27 +23,11 @@ $registry = Bootstrap::getObjectManager()->get(\Magento\Framework\Registry::clas
 $registry->unregister('isSecureArea');
 $registry->register('isSecureArea', true);
 
-
-/** @var \Magento\Store\Model\Website $website */
-$website = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Store\Model\Website');
-$website->load('second_website');
-
-if ($website->getId()) {
-    $website->delete();
-}
-
 /** @var $product \Magento\Catalog\Model\Product */
 $product = Bootstrap::getObjectManager()->create(\Magento\Catalog\Model\Product::class);
-$product->load(5000);
+$product->load(222);
 if ($product->getId()) {
     $product->delete();
 }
-/** @var $product \Magento\Catalog\Model\Product */
-$product = Bootstrap::getObjectManager()->create(\Magento\Catalog\Model\Product::class);
-$product->load(5001);
-if ($product->getId()) {
-    $product->delete();
-}
-
 $registry->unregister('isSecureArea');
 $registry->register('isSecureArea', false);

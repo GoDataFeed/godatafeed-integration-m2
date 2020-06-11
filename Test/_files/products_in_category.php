@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2018 Method Merchant, LLC or its affiliates. All Rights Reserved.
  *
@@ -86,4 +87,3 @@ $category->setId(333)
     ->setAvailableSortBy(['position'])
     ->setPostedProducts([5001 => 10, 5002 => 20, 5003 => 30])
     ->save();
-

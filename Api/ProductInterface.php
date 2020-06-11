@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2018 Method Merchant, LLC or its affiliates. All Rights Reserved.
  *
@@ -16,8 +17,11 @@
  */
 
 namespace GoDataFeed\FeedManagement\Api;
+
 /**
  * API interface for product export to GDF
+ *
+ * @SuppressWarnings(PHPMD.ShortVariable)
  */
 interface ProductInterface
 {
