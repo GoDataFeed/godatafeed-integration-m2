@@ -24,7 +24,7 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 ### [v2.0.4 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.4)
 
 #### Enhancements 
-        * The code has been updated by PHPCS and PHPMD code stadards
+        * The code has been updated by PHPCS and PHPMD code standards
         * The source code moved to root directory towards Magento marketplace requirements 
 
 ### [v2.0.3 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.3)
