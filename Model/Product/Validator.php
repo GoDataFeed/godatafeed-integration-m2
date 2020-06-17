@@ -33,19 +33,19 @@ use Magento\Framework\Message\ManagerInterface;
  */
 class Validator implements ValidatorInterface
 {
-    public const DEFAULT_PAGE_SIZE_MAX = 250;
+    const DEFAULT_PAGE_SIZE_MAX = 250;
     /**
      * [0-9]
      */
-    public const TYPE_NUMERIC = 'numeric';
+    const TYPE_NUMERIC = 'numeric';
     /**
      * [azAZ0-9]
      */
-    public const TYPE_ALPHANUMERIC = 'alphanumeric';
+    const TYPE_ALPHANUMERIC = 'alphanumeric';
     /**
      * [azAZ0-9_]
      */
-    public const TYPE_EXD_ALPHANUMERIC = 'exd_alphanumeric';
+    const TYPE_EXD_ALPHANUMERIC = 'exd_alphanumeric';
 
     /**
      * @var \Magento\Eav\Api\AttributeRepositoryInterface
