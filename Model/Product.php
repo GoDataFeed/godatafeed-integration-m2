@@ -47,8 +47,8 @@ use GoDataFeed\FeedManagement\Model\Product\ResponseCreatorInterface;
  */
 class Product implements ProductInterface
 {
-    public const DEFAULT_PAGE_NUMBER = 1;
-    public const DEFAULT_PAGE_SIZE = 50;
+    const DEFAULT_PAGE_NUMBER = 1;
+    const DEFAULT_PAGE_SIZE = 50;
 
     /**
      * Input params that can be get from the requests;

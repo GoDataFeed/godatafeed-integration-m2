@@ -26,9 +26,9 @@ use Magento\TestFramework\TestCase\WebapiAbstract;
 
 class GoDataFeedTest extends WebapiAbstract
 {
-    public const SERVICE_NAME = 'godatafeedProductV1';
-    public const SERVICE_VERSION = 'V1';
-    public const RESOURCE_PATH = '/V1/godatafeed';
+    const SERVICE_NAME = 'godatafeedProductV1';
+    const SERVICE_VERSION = 'V1';
+    const RESOURCE_PATH = '/V1/godatafeed';
 
     /**
      * Get information about product with entity_id = :id
