@@ -36,7 +36,7 @@
  * Checkout the GoDataFeed extension from https://marketplace.magento.com.
  * Once you have checked out, go to My Profile > My Products > My Purchases. Look for GoDataFeed and click on Technical details.
  
- ![GoDataFeed m2 extension technical details](https://s3.amazonaws.com/static.godatafeed.com/content/docs/My+Downloads+_+Extensions_GoDataFeed.png)
+ ![GoDataFeed m2 extension technical details](https://s3.amazonaws.com/static.godatafeed.com/content/docs/GoDataFeed_FeedManagement_Install.png)
  
  * Run the following commands:
  * `composer require godatafeed/godatafeed-product-integration-module:<Component version> --no-update`
