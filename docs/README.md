@@ -39,7 +39,7 @@
  ![GoDataFeed m2 extension technical details](https://s3.amazonaws.com/static.godatafeed.com/content/docs/GoDataFeed_FeedManagement_Install.png)
  
  * Run the following commands:
- * `composer require godatafeed/godatafeed-product-integration-module:<Component version> --no-update`
+ * `composer require godatafeed/godatafeed-feed-management:<Component version> --no-update`
  * `composer update`
  * `php bin/magento setup:upgrade`
  * `php bin/magento setup:di:compile`
@@ -61,7 +61,7 @@
 * Extract the contents to */app/code* directory
   * Example: *tar -xvzf GoDataFeed.tar.gz -C ./app/code*
 
-* Enable the extension: *php -f bin/magento module:enable --clear-static-content GoDataFeed_Product_Integration*
+* Enable the extension: *php -f bin/magento module:enable --clear-static-content GoDataFeed_FeedManagement*
 
 * Upgrade the Magento installation: *php -f bin/magento setup:upgrade*
 
@@ -98,7 +98,7 @@
 
 # Uninstall
 
-* To completely disable the module, run: *php bin/magento module:disable GoDataFeed_Product_Integration*
+* To completely disable the module, run: *php bin/magento module:disable GoDataFeed_FeedManagement*
 
 # Troubleshooting
  * [Visit our help center for troubleshooting or more information.](https://help.godatafeed.com/hc/en-us/sections/115000914112)
