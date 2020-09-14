@@ -67,6 +67,10 @@
 
 * Compile the Magento installation: *php -f bin/magento setup:di:compile*
 
+* Flush  the Magento cache: *php -f bin/magento cache:flush*
+
+
+
 # Configuration
 
 * Login to your Magento Admin Dashboard
