@@ -21,6 +21,11 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 
 ## Release Notes
 
+### [v2.0.5 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.5)
+
+#### Enhancements 
+        * Updated logic to include attributes with data types
+
 ### [v2.0.4 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.4)
 
 #### Enhancements 
