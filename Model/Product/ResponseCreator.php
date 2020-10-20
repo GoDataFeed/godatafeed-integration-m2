@@ -281,7 +281,8 @@ class ResponseCreator implements ResponseCreatorInterface
                 $productData[$attributeName] = number_format($attributeValue, '2', '.', '');
             }
 
-            if ($aType === 'text' || $aType === 'textarea') {
+
+            if ($aType === 'text' || $aType === 'textarea' || $aType === 'date') {
                 $attributeValue = $product->getData($attributeName);
                 $productData[$attributeName] = $attributeValue;
             }
