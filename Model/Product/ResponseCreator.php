@@ -188,6 +188,42 @@ class ResponseCreator implements ResponseCreatorInterface
         $productData = $this->prepareParentSkuParams($product, $productData);
         $productData = $this->prepareImageParams($product, $productData);
         $productData = $this->prepareAdditionalAttributesParams($product, $productData);
+        $productData = $this->prepareStockItemParams($product, $productData);
+        return $productData;
+    }
+
+    private function prepareStockItemParams(ProductInterface $product, array $productData)
+    {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $sourceItemData = [];
+
+        if (class_exists(\Magento\InventoryApi\Api\SourceItemRepositoryInterface::class)) { // 2.2+
+            $sourceItemRepository = $objectManager->create('Magento\InventoryApi\Api\GetSourceItemsBySkuInterface');
+            $sourceItems = $sourceItemRepository->execute($product->getSku());
+            if ($sourceItems) {
+                foreach ($sourceItems as $sourceItem) {
+                    $sourceItemData[]     = [
+                        'sku'             => $sourceItem->getSku(),
+                        'source_code'     => $sourceItem->getSourceCode(),
+                        'quantity'         => $sourceItem->getQuantity(),
+                        'status'         => $sourceItem->getStatus()
+                    ];
+                }
+            }
+
+            $productData['inventory'] = $sourceItemData;
+        } else if (class_exists(\Magento\CatalogInventory\Model\Stock\StockItemRepository::class)) { // <= 2.2
+            $sourceItemRepository = $objectManager->create('Magento\CatalogInventory\Model\Stock\StockItemRepository');
+            $stockData = $sourceItemRepository->get($product->getId());
+            $sourceItemData     = [
+                'sku'             => $product->getSku(),
+                'quantity'         => $stockData->getQty(),
+                'status'         => $stockData->getIsInStock()
+            ];
+
+            $productData['inventory'] = $sourceItemData;
+        }
+
         return $productData;
     }
 
@@ -384,6 +420,9 @@ class ResponseCreator implements ResponseCreatorInterface
         $productData['url_path'] = $product->getUrlKey();
         $productData['website_ids'] = implode(',', $product->getWebsiteIds());
         $productData['weight'] = number_format($product->getWeight(), '2', '.', '');
+        $price = $product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();
+        $productData['final_price'] = $price;
+
         return $productData;
     }
 }
