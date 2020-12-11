@@ -214,7 +214,7 @@ class ResponseCreator implements ResponseCreatorInterface
             $productData['inventory'] = $sourceItemData;
         } else if (class_exists(\Magento\CatalogInventory\Model\Stock\StockItemRepository::class)) { // <= 2.2
             $sourceItemRepository = $objectManager->create('Magento\CatalogInventory\Model\Stock\StockItemRepository');
-            $stockData = $sourceItemRepository->get($product->getId());
+            $stockData = $sourceItemRepository->get($stockItem->getItemId());
             $sourceItemData     = [
                 'sku'             => $product->getSku(),
                 'quantity'         => $stockData->getQty(),
