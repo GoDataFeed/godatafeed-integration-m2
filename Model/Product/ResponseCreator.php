@@ -212,16 +212,20 @@ class ResponseCreator implements ResponseCreatorInterface
             }
 
             $productData['inventory'] = $sourceItemData;
-        } else if (class_exists(\Magento\CatalogInventory\Model\Stock\StockItemRepository::class)) { // <= 2.2
+        } 
+        else if (class_exists(\Magento\CatalogInventory\Model\Stock\StockItemRepository::class)) { // <= 2.2
             $sourceItemRepository = $objectManager->create('Magento\CatalogInventory\Model\Stock\StockItemRepository');
-            $stockData = $sourceItemRepository->get($stockItem->getItemId());
-            $sourceItemData     = [
-                'sku'             => $product->getSku(),
-                'quantity'         => $stockData->getQty(),
-                'status'         => $stockData->getIsInStock()
-            ];
+            $stockItem = $product->getExtensionAttributes()->getStockItem();
+            if ($stockItem) {
 
-            $productData['inventory'] = $sourceItemData;
+                $stockData = $sourceItemRepository->get($stockItem->getItemId());
+                $sourceItemData = [
+                    'sku' => $product->getSku(),
+                    'quantity' => $stockData->getQty(),
+                    'status' => $stockData->getIsInStock()
+                ];
+                $productData['inventory'] = $sourceItemData;
+            }
         }
 
         return $productData;
