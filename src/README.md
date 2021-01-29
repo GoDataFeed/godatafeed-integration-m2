@@ -21,6 +21,11 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 
 ## Release Notes
 
+### [v2.0.8 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.8)
+
+#### Enhancements 
+        * Fixed missing variable for stockItems
+
 ### [v2.0.7 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.7)
 
 #### Enhancements 
