@@ -8,10 +8,9 @@
 
 ## Pre-Requisites
 
-* Magento 2.1+
-  * [Magento 2 System Requirements](http://devdocs.magento.com/magento-system-requirements.html)
-
-* Php 7.0+
+* Magento
+  * [Magento 2.3 System Requirements](https://devdocs.magento.com/guides/v2.3/install-gde/system-requirements.html)
+  * [Magento 2.4 System Requirements](https://devdocs.magento.com/guides/v2.4/install-gde/system-requirements.html)
 
 * An active GoDataFeed account
 
