@@ -190,7 +190,7 @@ Now, let’s  navigate through the following 10 steps to install the extension f
 - Q: How to I check of the extension is enabled? 
   - Answer: From the terminal, navigate to the Magento root directory and run:
     - `php bin/magento module:status`
-    - You should see Gosdfsdfsdf_sfsdfsdfsdfsdf extension on the Enabled extension list
+    - You should see `GoDataFeed_FeedManagement` extension on the Enabled extension list
     - You could also view the file `MAGENTO_ROOT_DIRECTORY/app/etc/config.php` there you will see enabled and disabled extensions
 
 
