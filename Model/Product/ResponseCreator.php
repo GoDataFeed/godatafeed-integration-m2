@@ -212,19 +212,21 @@ class ResponseCreator implements ResponseCreatorInterface
             }
 
             $productData['inventory'] = $sourceItemData;
-        } 
-        else if (class_exists(\Magento\CatalogInventory\Model\Stock\StockItemRepository::class)) { // <= 2.2
-            $sourceItemRepository = $objectManager->create('Magento\CatalogInventory\Model\Stock\StockItemRepository');
-            $stockItem = $sourceItemRepository->get($product->getId());
-            if ($stockItem) {
+        } else if (class_exists(\Magento\CatalogInventory\Api\StockRegistryInterface::class)) { // <= 2.2
+            $stockRegistry = $objectManager->create('Magento\CatalogInventory\Api\StockRegistryInterface');
 
-                $stockData = $sourceItemRepository->get($stockItem->getItemId());
-                $sourceItemData = [
-                    'sku' => $product->getSku(),
-                    'quantity' => $stockData->getQty(),
-                    'status' => $stockData->getIsInStock()
-                ];
-                $productData['inventory'] = $sourceItemData;
+            try {
+                $stockItem = $stockRegistry->getStockItem($product->getId());
+                if ($stockItem) {
+                    $sourceItemData = [
+                        'sku' => $product->getSku(),
+                        'quantity' => $stockItem->getQty(),
+                        'status' => $stockItem->getIsInStock()
+                    ];
+                    $productData['inventory'] = $sourceItemData;
+                }
+            } catch (Exception $e) {
+                $this->logger->critical('GoDataFeed Error message', ['exception' => $e]);
             }
         }
 
