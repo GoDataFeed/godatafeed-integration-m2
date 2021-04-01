@@ -407,6 +407,8 @@ class ResponseCreator implements ResponseCreatorInterface
 
         $stockItem = $this->stockRegistry->getStockItem($product->getId());
         $productData['is_in_stock'] = $stockItem->getData('is_in_stock');
+        $productData['manage_stock'] = $stockItem->getData('manage_stock');
+        $productData['use_config_manage_stock'] = $stockItem->getData('use_config_manage_stock');
         $productData['is_saleable'] = $product->getIsSalable();
         $productData['keywords'] = $product->getMetaKeyword();
         $productData['msrp'] = number_format($product->getMsrp(), '2', '.', ',');

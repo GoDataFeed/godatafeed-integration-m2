@@ -1,6 +1,8 @@
 # GoDataFeed Integration Extension for Magento 2
 
-[View the Complete User Guide](./README.md)
+## Installation and Configuration
+
+Please follow the instructions in the [User Guide](/docs/README.md)
 
 ## Learn More about GoDataFeed
 
@@ -8,30 +10,31 @@
 
 ## Pre-Requisites
 
-* Magento 2.1+
-  * [Magento 2 System Requirements](http://devdocs.magento.com/magento-system-requirements.html)
-
-* Php 7.0+
+* Magento
+  * [Magento 2.3 System Requirements](https://devdocs.magento.com/guides/v2.3/install-gde/system-requirements.html)
+  * [Magento 2.4 System Requirements](https://devdocs.magento.com/guides/v2.4/install-gde/system-requirements.html)
 
 * An active GoDataFeed account
 
-## Installation and Configuration
 
-Please follow the instructions in the [User Guide](/docs/README.md)
 
 ## Release Notes
+### [v2.0.9 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.9)
 
+#### Enhancements 
+        * Adding in use_config_manage_stock and manage_stock fields
+        
 ### [v2.0.8 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.8)
 
 #### Enhancements 
         * Fixed missing variable for stockItems
 
-### [v2.0.7 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.7)
+### ~~[v2.0.7 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.7)~~
 
 #### Enhancements 
         * Fix for stock items using the wrong id
 
-### [v2.0.6 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.6)
+### ~~[v2.0.6 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.6)~~
 
 #### Enhancements 
         * Added code for Inventory Sources and Final Price
