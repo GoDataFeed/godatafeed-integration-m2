@@ -1,5 +1,13 @@
 # GoDataFeed Integration Extension for Magento 2
 
+## Supported Versions
+| Version | Supported          |
+| ------- | ------------------ |
+| Open Source (CE) 2.2.x >  | :white_check_mark: |
+| Commerce on Cloud (ECE)   | :white_check_mark: |
+| Commerce on prem (EE)   | :white_check_mark: |
+| Open Source (CE) < 2.0   | :x:                |
+
 ## Installation and Configuration
 
 Please follow the instructions in the [User Guide](/docs/README.md)
