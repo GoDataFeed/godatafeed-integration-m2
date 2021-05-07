@@ -321,7 +321,7 @@ class Product implements ProductInterface
                 continue;
             }
             if ('category_id' === $key) {
-                $productCollection->addCategoriesFilter(['eq' => $param]);
+                $productCollection->addCategoriesFilter(['in' => $param]);
                 continue;
             }
             if ('website_id' === $key) {
