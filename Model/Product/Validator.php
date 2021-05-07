@@ -100,10 +100,10 @@ class Validator implements ValidatorInterface
             'min_value' => null,
         ],
         'category_id' => [
-            'type' => self::TYPE_NUMERIC,
+            'type' => self::TYPE_EXD_ALPHANUMERIC,
             'min_length' => 1,
-            'max_length' => 11,
-            'min_value' => 1,
+            'max_length' => 100,
+            'min_value' => null,
         ],
         'page' => [
             'type' => self::TYPE_NUMERIC,
@@ -224,12 +224,12 @@ class Validator implements ValidatorInterface
         if (array_key_exists('type_id', $params) && !$this->isProductType($params['type_id'])) {
             throw new LocalizedException(__("There is no such product type: Your value: '{$params['type_id']}'"));
         }
-        if (array_key_exists('category_id', $params)) {
-            $category = $this->categoryFactory->create()->load($params['category_id']);
-            if (!$category->getId()) {
-                throw new LocalizedException(__("Category not found. Your value: '{$params['category_id']}'"));
-            }
-        }
+        // if (array_key_exists('category_id', $params)) {
+        //     $category = $this->categoryFactory->create()->load($params['category_id']);
+        //     if (!$category->getId()) {
+        //         throw new LocalizedException(__("Category not found. Your value: '{$params['category_id']}'"));
+        //     }
+        // }
         if (array_key_exists('order_field', $params)) {
             if (!$this->isCorrectOrderField($params['order_field'])) {
                 throw new LocalizedException(
