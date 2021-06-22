@@ -250,6 +250,7 @@ class ResponseCreator implements ResponseCreatorInterface
         $categoryParentName = [];
         $categoryParentNameArray = [];
         foreach ($categoryIds as $categoryId) {
+            try {
             $category = $this->categoryRepository->get($categoryId);
             $categoryName[] = $category->getName();
             $path = $category->getPath();
@@ -261,6 +262,10 @@ class ResponseCreator implements ResponseCreatorInterface
                 $categoryParentName[$key] = $childCategory->getName();
             }
             $categoryParentNameArray = implode('/', $categoryParentName);
+                
+            } catch (Exception $e) {                
+                $this->logger->addError($e->getMessage());
+            }
         }
 
         $productData['category_breadcrumb'] = implode('/', $categoryName);
