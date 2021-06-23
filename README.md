@@ -24,34 +24,38 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 
 * An active GoDataFeed account
 
-
 ## Latest Releases
-### [v2.0.10 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.10)
+### [v2.0.11](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.11)
+
+#### Enhancements 
+        * Updated Extension to handle oprhaned categories 
+
+### [v2.0.10](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.10)
 
 #### Enhancements 
         * Adding in use_config_manage_stock and manage_stock fields
 
-### [v2.0.9 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.9)
+### [v2.0.9](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.9)
 
 #### Enhancements 
         * Stock / Inventory Sources Bugs Fixed
 
-### [v2.0.8 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.8)
+### [v2.0.8](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.8)
 
 #### Enhancements 
         * Fixed missing variable for stockItems
 
-### ~~[v2.0.7 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.7)~~
+### ~~[v2.0.7](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.7)~~
 
 #### Enhancements 
         * Fix for stock items using the wrong id
 
-### ~~[v2.0.6 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.6)~~
+### ~~[v2.0.6](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.6)~~
 
 #### Enhancements 
         * Added code for Inventory Sources and Final Price
 
-### [v2.0.5 update](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.5)
+### [v2.0.5](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.5)
 
 #### Enhancements 
         * Updated logic to include attributes with data types
