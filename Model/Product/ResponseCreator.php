@@ -251,20 +251,19 @@ class ResponseCreator implements ResponseCreatorInterface
         $categoryParentNameArray = [];
         foreach ($categoryIds as $categoryId) {
             try {
-            $category = $this->categoryRepository->get($categoryId);
-            $categoryName[] = $category->getName();
-            $path = $category->getPath();
-            $ids = explode('/', $path);
-            array_shift($ids);
-            $categoryParentId = implode('/', $ids);
-            foreach ($ids as $key => $value) {
-                $childCategory = $this->categoryRepository->get($value);
-                $categoryParentName[$key] = $childCategory->getName();
-            }
-            $categoryParentNameArray = implode('/', $categoryParentName);
-                
-            } catch (Exception $e) {                
-                $this->logger->addError($e->getMessage());
+                $category = $this->categoryRepository->get($categoryId);
+                $categoryName[] = $category->getName();
+                $path = $category->getPath();
+                $ids = explode('/', $path);
+                array_shift($ids);
+                $categoryParentId = implode('/', $ids);
+                foreach ($ids as $key => $value) {
+                    $childCategory = $this->categoryRepository->get($value);
+                    $categoryParentName[$key] = $childCategory->getName();
+                }
+                $categoryParentNameArray = implode('/', $categoryParentName);
+            } catch (Exception $e) {
+                $this->logger->critical('GoDataFeed Error message', ['exception' => $e]);
             }
         }
 
@@ -319,27 +318,32 @@ class ResponseCreator implements ResponseCreatorInterface
     private function prepareAdditionalAttributesParams(ProductInterface $product, array $productData)
     {
         $productAttributes = $this->productAttributeCollectionFactory->create()->load();
+
         foreach ($productAttributes as $attribute) {
-            $attributeName = strtolower($attribute->getName());
-            $aType = $attribute->getFrontendInput();
+            try {
+                $attributeName = strtolower($attribute->getName());
+                $aType = $attribute->getFrontendInput();
 
-            if ($aType === 'price') { // Get the price and the final price (after discounts)
-                $attributeValue = $product->getData($attributeName);
-                $productData[$attributeName] = number_format($attributeValue, '2', '.', '');
-            }
+                if ($aType === 'price') { // Get the price and the final price (after discounts)
+                    $attributeValue = $product->getData($attributeName);
+                    $productData[$attributeName] = number_format($attributeValue, '2', '.', '');
+                }
 
 
-            if ($aType === 'text' || $aType === 'textarea' || $aType === 'date') {
-                $attributeValue = $product->getData($attributeName);
-                $productData[$attributeName] = $attributeValue;
-            }
+                if ($aType === 'text' || $aType === 'textarea' || $aType === 'date') {
+                    $attributeValue = $product->getData($attributeName);
+                    $productData[$attributeName] = $attributeValue;
+                }
 
-            if (
-                in_array($aType, ['select', 'multiselect', 'boolean', 'swatch_visual', 'swatch_text']) &&
-                $attributeName != 'quantity_and_stock_status'
-            ) {
-                $attributeValue = $product->getAttributeText($attributeName);
-                $productData[$attributeName] = is_object($attributeValue) ? (string)$attributeValue : $attributeValue;
+                if (
+                    in_array($aType, ['select', 'multiselect', 'boolean', 'swatch_visual', 'swatch_text']) &&
+                    $attributeName != 'quantity_and_stock_status'
+                ) {
+                    $attributeValue = $product->getAttributeText($attributeName);
+                    $productData[$attributeName] = is_object($attributeValue) ? (string)$attributeValue : $attributeValue;
+                }
+            } catch (Exception $e) {
+                $this->logger->critical('GoDataFeed Error message', ['exception' => $e]);
             }
         }
         return $productData;

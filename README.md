@@ -25,6 +25,11 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 * An active GoDataFeed account
 
 ## Latest Releases
+### [v2.0.12](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.12)
+
+#### Enhancements 
+        * Updated Extension to handle oprhaned attributes
+
 ### [v2.0.11](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.11)
 
 #### Enhancements 
