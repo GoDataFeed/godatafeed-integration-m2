@@ -190,37 +190,37 @@ class ResponseCreator implements ResponseCreatorInterface
     {
         $productData = [];
         try {
-        $productData = $this->prepareBasicParams($product, $productData);
+            $productData = $this->prepareBasicParams($product, $productData);
         } catch (\Exception $e) {
             $this->logger->addError($e->getMessage());
         }
         try {
-        $productData = $this->prepareCategoryParams($product, $productData);
+            $productData = $this->prepareCategoryParams($product, $productData);
         } catch (\Exception $e) {
             $this->logger->addError($e->getMessage());
         }
         try {
-        $productData = $this->prepareChildSkuParams($product, $productData);
+            $productData = $this->prepareChildSkuParams($product, $productData);
         } catch (\Exception $e) {
             $this->logger->addError($e->getMessage());
         }
         try {
-        $productData = $this->prepareParentSkuParams($product, $productData);
+            $productData = $this->prepareParentSkuParams($product, $productData);
         } catch (\Exception $e) {
             $this->logger->addError($e->getMessage());
         }
         try {
-        $productData = $this->prepareImageParams($product, $productData);
+            $productData = $this->prepareImageParams($product, $productData);
         } catch (\Exception $e) {
             $this->logger->addError($e->getMessage());
         }
         try {
-        $productData = $this->prepareAdditionalAttributesParams($product, $productData);
+            $productData = $this->prepareAdditionalAttributesParams($product, $productData);
         } catch (\Exception $e) {
             $this->logger->addError($e->getMessage());
         }
         try {
-        $productData = $this->prepareStockItemParams($product, $productData);
+            $productData = $this->prepareStockItemParams($product, $productData);
         } catch (\Exception $e) {
             $this->logger->addError($e->getMessage());
         }
@@ -235,18 +235,18 @@ class ResponseCreator implements ResponseCreatorInterface
         if (class_exists(\Magento\InventoryApi\Api\SourceItemRepositoryInterface::class)) { // 2.2+
             $sourceItemRepository = $objectManager->create('Magento\InventoryApi\Api\GetSourceItemsBySkuInterface');
             try {
-            $sourceItems = $sourceItemRepository->execute($product->getSku());
-            if ($sourceItems) {
-                foreach ($sourceItems as $sourceItem) {
-                    $sourceItemData[]     = [
-                        'sku'             => $sourceItem->getSku(),
-                        'source_code'     => $sourceItem->getSourceCode(),
-                        'quantity'         => $sourceItem->getQuantity(),
-                        'status'         => $sourceItem->getStatus()
-                    ];
+                $sourceItems = $sourceItemRepository->execute($product->getSku());
+                if ($sourceItems) {
+                    foreach ($sourceItems as $sourceItem) {
+                        $sourceItemData[]     = [
+                            'sku'             => $sourceItem->getSku(),
+                            'source_code'     => $sourceItem->getSourceCode(),
+                            'quantity'         => $sourceItem->getQuantity(),
+                            'status'         => $sourceItem->getStatus()
+                        ];
+                    }
                 }
-            }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->logger->addError($e->getMessage());
             }
 
@@ -401,14 +401,18 @@ class ResponseCreator implements ResponseCreatorInterface
     private function prepareParentSkuParams(ProductInterface $product, array $productData)
     {
         if ($product->getTypeId() == "simple") {
-            $parentIds = $this->groupedFactory->create()->getParentIdsByChild($product->getId());
-            if (!$parentIds) {
-                $parentIds = $this->configurableFactory->create()->getParentIdsByChild($product->getId());
-            }
+            try {
+                $parentIds = $this->groupedFactory->create()->getParentIdsByChild($product->getId());
+                if (!$parentIds) {
+                    $parentIds = $this->configurableFactory->create()->getParentIdsByChild($product->getId());
+                }
 
-            if (isset($parentIds[0])) {
-                $parentSku = $this->productRepository->getById($parentIds[0])->getSku();
-                $productData['parent_sku'] = $parentSku;
+                if (isset($parentIds[0])) {
+                    $parentSku = $this->productRepository->getById($parentIds[0])->getSku();
+                    $productData['parent_sku'] = $parentSku;
+                }
+            } catch (Exception $e) {
+                $this->logger->addError($e->getMessage());
             }
         }
         return $productData;
