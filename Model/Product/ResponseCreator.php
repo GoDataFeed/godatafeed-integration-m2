@@ -411,7 +411,7 @@ class ResponseCreator implements ResponseCreatorInterface
                     $parentSku = $this->productRepository->getById($parentIds[0])->getSku();
                     $productData['parent_sku'] = $parentSku;
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->logger->addError($e->getMessage());
             }
         }
