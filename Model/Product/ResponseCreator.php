@@ -28,6 +28,7 @@ use Magento\GroupedProduct\Model\Product\Type\GroupedFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\Catalog\Api\Data\ProductInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class ResponseCreator encapsulates logic connected with the response format.
@@ -69,6 +70,10 @@ class ResponseCreator implements ResponseCreatorInterface
      * @var \Magento\Catalog\Api\ProductRepositoryInterface
      */
     private $productRepository;
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
 
     /**
      * ResponseCreator constructor.
@@ -90,7 +95,8 @@ class ResponseCreator implements ResponseCreatorInterface
         GroupedFactory $groupedFactory,
         ConfigurableFactory $configurableFactory,
         ProductRepositoryInterface $productRepository,
-        ProductAttributeCollection $productAttributeCollectionFactory
+        ProductAttributeCollection $productAttributeCollectionFactory,
+        LoggerInterface $logger
     ) {
         $this->attributeSetRepository = $attributeSetRepositoryInterface;
         $this->categoryRepository = $categoryRepositoryInterface;
@@ -100,6 +106,7 @@ class ResponseCreator implements ResponseCreatorInterface
         $this->configurableFactory = $configurableFactory;
         $this->productAttributeCollectionFactory = $productAttributeCollectionFactory;
         $this->productRepository = $productRepository;
+        $this->logger = $logger;
     }
 
     /**
@@ -182,13 +189,41 @@ class ResponseCreator implements ResponseCreatorInterface
     private function prepareResponseData(ProductInterface $product)
     {
         $productData = [];
+        try {
         $productData = $this->prepareBasicParams($product, $productData);
+        } catch (\Exception $e) {
+            $this->logger->addError($e->getMessage());
+        }
+        try {
         $productData = $this->prepareCategoryParams($product, $productData);
+        } catch (\Exception $e) {
+            $this->logger->addError($e->getMessage());
+        }
+        try {
         $productData = $this->prepareChildSkuParams($product, $productData);
+        } catch (\Exception $e) {
+            $this->logger->addError($e->getMessage());
+        }
+        try {
         $productData = $this->prepareParentSkuParams($product, $productData);
+        } catch (\Exception $e) {
+            $this->logger->addError($e->getMessage());
+        }
+        try {
         $productData = $this->prepareImageParams($product, $productData);
+        } catch (\Exception $e) {
+            $this->logger->addError($e->getMessage());
+        }
+        try {
         $productData = $this->prepareAdditionalAttributesParams($product, $productData);
+        } catch (\Exception $e) {
+            $this->logger->addError($e->getMessage());
+        }
+        try {
         $productData = $this->prepareStockItemParams($product, $productData);
+        } catch (\Exception $e) {
+            $this->logger->addError($e->getMessage());
+        }
         return $productData;
     }
 
@@ -199,6 +234,7 @@ class ResponseCreator implements ResponseCreatorInterface
 
         if (class_exists(\Magento\InventoryApi\Api\SourceItemRepositoryInterface::class)) { // 2.2+
             $sourceItemRepository = $objectManager->create('Magento\InventoryApi\Api\GetSourceItemsBySkuInterface');
+            try {
             $sourceItems = $sourceItemRepository->execute($product->getSku());
             if ($sourceItems) {
                 foreach ($sourceItems as $sourceItem) {
@@ -209,6 +245,9 @@ class ResponseCreator implements ResponseCreatorInterface
                         'status'         => $sourceItem->getStatus()
                     ];
                 }
+            }
+            } catch (Exception $e) {
+                $this->logger->addError($e->getMessage());
             }
 
             $productData['inventory'] = $sourceItemData;
@@ -226,7 +265,7 @@ class ResponseCreator implements ResponseCreatorInterface
                     $productData['inventory'] = $sourceItemData;
                 }
             } catch (Exception $e) {
-                $this->logger->critical('GoDataFeed Error message', ['exception' => $e]);
+                $this->logger->addError($e->getMessage());
             }
         }
 
@@ -263,7 +302,7 @@ class ResponseCreator implements ResponseCreatorInterface
                 }
                 $categoryParentNameArray = implode('/', $categoryParentName);
             } catch (Exception $e) {
-                $this->logger->critical('GoDataFeed Error message', ['exception' => $e]);
+                $this->logger->addError($e->getMessage());
             }
         }
 
