@@ -232,7 +232,7 @@ class ResponseCreator implements ResponseCreatorInterface
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $sourceItemData = [];
 
-        if (class_exists(\Magento\InventoryApi\Api\SourceItemRepositoryInterface::class)) { // 2.2+
+        if (interface_exists(\Magento\InventoryApi\Api\SourceItemRepositoryInterface::class)) { // 2.2+
             $sourceItemRepository = $objectManager->create('Magento\InventoryApi\Api\GetSourceItemsBySkuInterface');
             try {
                 $sourceItems = $sourceItemRepository->execute($product->getSku());
@@ -251,7 +251,7 @@ class ResponseCreator implements ResponseCreatorInterface
             }
 
             $productData['inventory'] = $sourceItemData;
-        } else if (class_exists(\Magento\CatalogInventory\Api\StockRegistryInterface::class)) { // <= 2.2
+        } else if (interface_exists(\Magento\CatalogInventory\Api\StockRegistryInterface::class)) { // <= 2.2
             $stockRegistry = $objectManager->create('Magento\CatalogInventory\Api\StockRegistryInterface');
 
             try {
