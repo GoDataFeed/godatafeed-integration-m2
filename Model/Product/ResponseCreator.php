@@ -192,37 +192,37 @@ class ResponseCreator implements ResponseCreatorInterface
         try {
             $productData = $this->prepareBasicParams($product, $productData);
         } catch (\Exception $e) {
-            $this->logger->addError($e->getMessage());
+            $this->logger->error($e->getMessage());
         }
         try {
             $productData = $this->prepareCategoryParams($product, $productData);
         } catch (\Exception $e) {
-            $this->logger->addError($e->getMessage());
+            $this->logger->error($e->getMessage());
         }
         try {
             $productData = $this->prepareChildSkuParams($product, $productData);
         } catch (\Exception $e) {
-            $this->logger->addError($e->getMessage());
+            $this->logger->error($e->getMessage());
         }
         try {
             $productData = $this->prepareParentSkuParams($product, $productData);
         } catch (\Exception $e) {
-            $this->logger->addError($e->getMessage());
+            $this->logger->error($e->getMessage());
         }
         try {
             $productData = $this->prepareImageParams($product, $productData);
         } catch (\Exception $e) {
-            $this->logger->addError($e->getMessage());
+            $this->logger->error($e->getMessage());
         }
         try {
             $productData = $this->prepareAdditionalAttributesParams($product, $productData);
         } catch (\Exception $e) {
-            $this->logger->addError($e->getMessage());
+            $this->logger->error($e->getMessage());
         }
         try {
             $productData = $this->prepareStockItemParams($product, $productData);
         } catch (\Exception $e) {
-            $this->logger->addError($e->getMessage());
+            $this->logger->error($e->getMessage());
         }
         return $productData;
     }
@@ -247,7 +247,7 @@ class ResponseCreator implements ResponseCreatorInterface
                     }
                 }
             } catch (\Exception $e) {
-                $this->logger->addError($e->getMessage());
+                $this->logger->error($e->getMessage());
             }
 
             $productData['inventory'] = $sourceItemData;
@@ -265,7 +265,7 @@ class ResponseCreator implements ResponseCreatorInterface
                     $productData['inventory'] = $sourceItemData;
                 }
             } catch (Exception $e) {
-                $this->logger->addError($e->getMessage());
+                $this->logger->error($e->getMessage());
             }
         }
 
@@ -302,7 +302,7 @@ class ResponseCreator implements ResponseCreatorInterface
                 }
                 $categoryParentNameArray = implode('/', $categoryParentName);
             } catch (Exception $e) {
-                $this->logger->addError($e->getMessage());
+                $this->logger->error($e->getMessage());
             }
         }
 
@@ -365,7 +365,7 @@ class ResponseCreator implements ResponseCreatorInterface
 
                 if ($aType === 'price') { // Get the price and the final price (after discounts)
                     $attributeValue = $product->getData($attributeName);
-                    $productData[$attributeName] = number_format($attributeValue, '2', '.', '');
+                    $productData[$attributeName] = is_null($attributeValue) ? '' : number_format($attributeValue, '2', '.', '');
                 }
 
 
@@ -412,7 +412,7 @@ class ResponseCreator implements ResponseCreatorInterface
                     $productData['parent_sku'] = $parentSku;
                 }
             } catch (\Exception $e) {
-                $this->logger->addError($e->getMessage());
+                $this->logger->error($e->getMessage());
             }
         }
         return $productData;
@@ -463,15 +463,15 @@ class ResponseCreator implements ResponseCreatorInterface
         $productData['use_config_manage_stock'] = $stockItem->getData('use_config_manage_stock');
         $productData['is_saleable'] = $product->getIsSalable();
         $productData['keywords'] = $product->getMetaKeyword();
-        $productData['msrp'] = number_format($product->getMsrp(), '2', '.', ',');
+        $productData['msrp'] = is_null($product->getMsrp()) ? '' : number_format($product->getMsrp(), '2', '.', ',');
         $productData['news_from_date'] = $product->getNewsFromDate();
         $productData['news_to_date'] = $product->getNewsToDate();
 
-        $productData['price'] = number_format($product->getFinalPrice(), '2', '.', '');
-        $productData['quantity'] = number_format($stockItem->getData('qty'), 0, '.', '');
-        $productData['shipping_price'] = number_format($product->getShippingAmount(), 2, '.', '');
+        $productData['price'] = is_null($product->getFinalPrice()) ? '' : number_format($product->getFinalPrice(), '2', '.', '');
+        $productData['quantity'] = is_null($stockItem->getData('qty')) ? '' : number_format($stockItem->getData('qty'), 0, '.', '');
+        $productData['shipping_price'] = is_null($product->getShippingAmount()) ? '' : number_format($product->getShippingAmount(), 2, '.', '');
         $productData['special_from_date'] = $product->getSpecialFromDate();
-        $productData['special_price'] = number_format($product->getSpecialPrice(), '2', '.', '');
+        $productData['special_price'] = is_null($product->getSpecialPrice()) ? '' : number_format($product->getSpecialPrice(), '2', '.', '');
         $productData['special_to_date'] = $product->getSpecialToDate();
         $productData['store_ids'] = implode(',', $product->getStoreIds());
         $productData['title'] = $product->getName();
@@ -479,7 +479,7 @@ class ResponseCreator implements ResponseCreatorInterface
         $productData['url'] = $product->getUrlModel()->getUrl($product);
         $productData['url_path'] = $product->getUrlKey();
         $productData['website_ids'] = implode(',', $product->getWebsiteIds());
-        $productData['weight'] = number_format($product->getWeight(), '2', '.', '');
+        $productData['weight'] = is_null($product->getWeight()) ? '' : number_format($product->getWeight(), '2', '.', '');
         $price = $product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();
         $productData['final_price'] = $price;
 
