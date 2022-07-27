@@ -193,7 +193,7 @@ class Product implements ProductInterface
                 $result = $this->responseCreator->createResponse(__FUNCTION__, [$product]);
             }
         } catch (\Exception $e) {
-            $this->logger->addError($e->getMessage());
+            $this->logger->error($e->getMessage());
             throw $e;
         }
         return $result;
@@ -212,7 +212,7 @@ class Product implements ProductInterface
                 $result = $this->responseCreator->createResponse(__FUNCTION__, [$this->getCollection($filteredParams)]);
             }
         } catch (\Exception $e) {
-            $this->logger->addError($e->getMessage());
+            $this->logger->error($e->getMessage());
             throw $e;
         }
         return $result;
@@ -234,7 +234,7 @@ class Product implements ProductInterface
                 );
             }
         } catch (\Exception $e) {
-            $this->logger->addError($e->getMessage());
+            $this->logger->error($e->getMessage());
             throw $e;
         }
         return $result;
