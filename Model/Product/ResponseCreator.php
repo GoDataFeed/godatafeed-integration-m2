@@ -75,6 +75,8 @@ class ResponseCreator implements ResponseCreatorInterface
      */
     private $logger;
 
+    private static $isMsiDisabled;
+
     /**
      * ResponseCreator constructor.
      *
@@ -86,6 +88,7 @@ class ResponseCreator implements ResponseCreatorInterface
      * @param ConfigurableFactory $configurableFactory
      * @param ProductRepositoryInterface $productRepository
      * @param ProductAttributeCollection $productAttributeCollectionFactory
+     * @param int $isMsiDisabled
      */
     public function __construct(
         AttributeSetRepositoryInterface $attributeSetRepositoryInterface,
@@ -112,9 +115,11 @@ class ResponseCreator implements ResponseCreatorInterface
     /**
      * @inheritdoc
      */
-    public function createResponse($type, array $productsData)
+    public function createResponse($type, array $productsData, int $isMsiDisabled = 0)
     {
         $response = [];
+        ResponseCreator::$isMsiDisabled = $isMsiDisabled;
+
         switch ($type) {
             case 'getProduct':
                 $response = $this->createProductResponse($productsData[0]);
@@ -232,7 +237,7 @@ class ResponseCreator implements ResponseCreatorInterface
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $sourceItemData = [];
 
-        if (interface_exists(\Magento\InventoryApi\Api\SourceItemRepositoryInterface::class)) { // 2.2+
+        if (ResponseCreator::$isMsiDisabled ==  0  &&  interface_exists(\Magento\InventoryApi\Api\SourceItemRepositoryInterface::class)) { // 2.2+
             $sourceItemRepository = $objectManager->create('Magento\InventoryApi\Api\GetSourceItemsBySkuInterface');
             try {
                 $sourceItems = $sourceItemRepository->execute($product->getSku());

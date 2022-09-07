@@ -129,6 +129,12 @@ class Validator implements ValidatorInterface
             'max_length' => 11,
             'min_value' => null,
         ],
+        'isMsiDisabled' => [
+            'type' => self::TYPE_NUMERIC,
+            'min_length' => 1,
+            'max_length' => 3,
+            'min_value' => null,
+        ],
     ];
 
     /**

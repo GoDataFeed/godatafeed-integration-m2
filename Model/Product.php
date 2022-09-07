@@ -57,6 +57,7 @@ class Product implements ProductInterface
     private $allowedParams = [
         'getProduct' => [
             'id',
+            'isMsiDisabled',
         ],
         'getProducts' => [
             'store',
@@ -68,6 +69,7 @@ class Product implements ProductInterface
             'limit',
             'order_field',
             'order_direction',
+            'isMsiDisabled',
         ],
         'getProductsCount' => [
             'store',
@@ -182,15 +184,24 @@ class Product implements ProductInterface
     /**
      * @inheritdoc
      */
-    public function getProduct($id)
+    public function getProduct($id, $isMsiDisabled = 0)
     {
         $result = '';
+
+        if($isMsiDisabled>1 || $isMsiDisabled<0) {
+            $result = "isMsiDisabled must be 0 or 1.";
+            return $result;
+        }
+
+        //Parameter that enables/disables multi source inventory
+        $MsiDisabled = is_null($isMsiDisabled) || $isMsiDisabled > 1 ? 0 : $isMsiDisabled;
+        
         $params['id'] = $id;
         $filteredParams = $this->filterParams(__FUNCTION__, $params);
         try {
             if ($this->validator->validate($filteredParams)) {
                 $product = $this->productRepository->getById($id);
-                $result = $this->responseCreator->createResponse(__FUNCTION__, [$product]);
+                $result = $this->responseCreator->createResponse(__FUNCTION__, [$product], $MsiDisabled);
             }
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
@@ -202,14 +213,23 @@ class Product implements ProductInterface
     /**
      * @inheritdoc
      */
-    public function getProducts()
+    public function getProducts($isMsiDisabled = 0)
     {
         $result = '';
+
+        if($isMsiDisabled>1 || $isMsiDisabled<0) {
+            $result = "isMsiDisabled must be 0 or 1.";
+            return $result;
+        }
+
+        //Parameter that enables/disables multi source inventory
+        $MsiDisabled = is_null($isMsiDisabled) || $isMsiDisabled > 1 ? 0 : $isMsiDisabled;
+
         $filteredParams = $this->filterParams(__FUNCTION__, $this->request->getParams());
         try {
             if ($this->validator->validate($filteredParams)) {
                 $filteredParams = $this->updateTypesFilter($filteredParams);
-                $result = $this->responseCreator->createResponse(__FUNCTION__, [$this->getCollection($filteredParams)]);
+                $result = $this->responseCreator->createResponse(__FUNCTION__, [$this->getCollection($filteredParams)], $MsiDisabled);
             }
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
@@ -230,7 +250,8 @@ class Product implements ProductInterface
                 $filteredParams = $this->updateTypesFilter($filteredParams);
                 $result = $this->responseCreator->createResponse(
                     __FUNCTION__,
-                    [$this->getCollection($filteredParams, false)]
+                    [$this->getCollection($filteredParams, false)],
+                    0
                 );
             }
         } catch (\Exception $e) {
@@ -330,6 +351,9 @@ class Product implements ProductInterface
             }
             if ('store' === $key) {
                 $productCollection->addStoreFilter($param);
+                continue;
+            }
+            if('isMsiDisabled' === $key) {
                 continue;
             }
             $productCollection->addAttributeToFilter($key, $param);
