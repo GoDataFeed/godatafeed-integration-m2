@@ -26,8 +26,9 @@ interface ResponseCreatorInterface
      * Method creates response in proper format using productsData.
      * @param string $type
      * @param array  $inputParams
+     * @param int $isMsiDisabled
      *
      * @return array
      */
-    public function createResponse($type, array $inputParams);
+    public function createResponse($type, array $inputParams, int $isMsiDisabled = 0);
 }

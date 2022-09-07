@@ -29,14 +29,18 @@ interface ProductInterface
      * Method retrieves information about the product with defined id
      *
      * @param string $id of the param.
+     * @param int $isMsiDisabled is a Parameter that enables/disables multi source inventory.
      *
      * @return mixed - list of the information about the product as the param Value array.
      * @throws \Exception
      */
-    public function getProduct($id);
+    public function getProduct($id, $isMsiDisabled = 0);
 
     /**
      * Method retrieves information about the list of the product. Supports next optional filters:
+     * 
+     * @param int $isMsiDisabled is a Parameter that enables/disables multi source inventory.
+     * 
      * website
      * type
      * store
@@ -49,7 +53,7 @@ interface ProductInterface
      * @return mixed - list of the information about the products as the param Value array.
      * @throws \Exception
      */
-    public function getProducts();
+    public function getProducts($isMsiDisabled = 0);
 
     /**
      * Method retrieves information about the amount of the product. Supports next optional filters:
