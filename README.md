@@ -25,6 +25,10 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 * An active GoDataFeed account
 
 ## Latest Releases
+        * Added parameter to disable multi source inventory aka msi
+### [v2.0.16](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.16)
+
+## Latest Releases
 ### [v2.0.15](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.15)
 
 ## Latest Releases
