@@ -25,6 +25,31 @@ Please follow the instructions in the [User Guide](/docs/README.md)
 * An active GoDataFeed account
 
 ## Latest Releases
+        * Confirmed compatibility with the latest Magento releases, including version 2.4.6.
+        * Verified support for PHP versions 5.6.5 and above, including PHP 8.0.x, 8.1.x, and 8.2.x.
+### [v2.0.17](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.17)
+## Latest Releases
+        * Added parameter to disable multi source inventory aka msi
+### [v2.0.16](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.16)
+
+## Latest Releases
+### [v2.0.15](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.15)
+
+## Latest Releases
+### [v2.0.14](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.14)
+
+#### Enhancements 
+        * Updated Extension to handle oprhaned attributes
+### [v2.0.13](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.13)
+
+#### Enhancements 
+        * Updated Extension to handle oprhaned attributes
+
+### [v2.0.12](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.12)
+
+#### Enhancements 
+        * Updated Extension to handle oprhaned attributes
+
 ### [v2.0.11](https://github.com/GoDataFeed/godatafeed-integration-m2/releases/tag/v2.0.11)
 
 #### Enhancements 

@@ -158,6 +158,10 @@ Now, let’s  navigate through the following 10 steps to install the extension f
       * Stores > Inventory > Stocks
       * Stores > Inventory > Sales Stocks
         ![catalog-inventory](extension-config-5.png)
+    * If you want to use our Magento 2 Order Destination, please make sure that in addition to the above, you also have the following:
+      * Sales > Operations > Orders
+      * Customers
+      * Carts
 * Click: The down arrow next to the **Save** button
   * Click: **Save & Activate**
     ![save and activate](extension-config-6.png)
@@ -170,6 +174,11 @@ Now, let’s  navigate through the following 10 steps to install the extension f
     * *Access Token Secret*
     ![save and activate](extension-config-8.png)
 
+* Enable Access Token Authentication
+  * In your Magento instance admin panel, go to Stores > Configuration > Services > OAuth
+  * Look for "OAuth Access Tokens to be used as standalone Bearer Tokens" and select "Yes"
+  ![save and activate](extension-config-10.png)
+
 * Go to: Stores > All Stores
 
 * Click on the *Store View* you wish to use for the integration
@@ -178,6 +187,8 @@ Now, let’s  navigate through the following 10 steps to install the extension f
     * In the screenshot below the store_id is **1**
     ![extension config](extension-config-9.png)
 
+
+# Reauthorize Access Token
 
 
 # FAQs
