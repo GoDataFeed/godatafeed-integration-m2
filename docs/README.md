@@ -188,9 +188,6 @@ Now, let’s  navigate through the following 10 steps to install the extension f
     ![extension config](extension-config-9.png)
 
 
-# Reauthorize Access Token
-
-
 # FAQs
 - Q: Where can I find my Magento Integration credentions
   - Answer: In the Magento admin go to: Systems > Extensions > Integrations
@@ -215,6 +212,27 @@ Now, let’s  navigate through the following 10 steps to install the extension f
       - For username enter your *Public key*
       - For password enter your *Private key*
       - ![composer-pic-4](composer-pic-4.png)
+
+- Q: I encountered the error "An error has occurred during application run. See exception log for details." How can I resolve this?**
+  - Answer: This error might pop up due to OPCACHE. Here's how you can tackle it:
+
+    First things first, try these quick fixes:
+    - Restarting the server often does the trick.
+    - Clean and flush the Magento cache by running:
+      ```bash
+      php bin/magento cache:clean
+      php bin/magento cache:flush
+      ```
+    - Recompile Magento Dependency Injection (DI) by running:
+      ```bash
+      php bin/magento setup:di:compile
+      ```
+
+    If you're still seeing the error after these steps, try this:
+    1. Delete the `generated/code` folder.
+    2. Repeat the cache cleaning and DI compilation steps mentioned above.
+
+    If the issue persists, please contact us.
 
 
 # Troubleshooting
