@@ -158,6 +158,10 @@ Now, let’s  navigate through the following 10 steps to install the extension f
       * Stores > Inventory > Stocks
       * Stores > Inventory > Sales Stocks
         ![catalog-inventory](extension-config-5.png)
+    * If you want to use our Magento 2 Order Destination, please make sure that in addition to the above, you also have the following:
+      * Sales > Operations > Orders
+      * Customers
+      * Carts
 * Click: The down arrow next to the **Save** button
   * Click: **Save & Activate**
     ![save and activate](extension-config-6.png)
@@ -170,6 +174,11 @@ Now, let’s  navigate through the following 10 steps to install the extension f
     * *Access Token Secret*
     ![save and activate](extension-config-8.png)
 
+* Enable Access Token Authentication
+  * In your Magento instance admin panel, go to Stores > Configuration > Services > OAuth
+  * Look for "OAuth Access Tokens to be used as standalone Bearer Tokens" and select "Yes"
+  ![save and activate](extension-config-10.png)
+
 * Go to: Stores > All Stores
 
 * Click on the *Store View* you wish to use for the integration
@@ -177,7 +186,6 @@ Now, let’s  navigate through the following 10 steps to install the extension f
     * Example URL: *http://www.your_magento_store.com/admin/system_store/editStore/store_id/**4**/key*
     * In the screenshot below the store_id is **1**
     ![extension config](extension-config-9.png)
-
 
 
 # FAQs
@@ -204,6 +212,27 @@ Now, let’s  navigate through the following 10 steps to install the extension f
       - For username enter your *Public key*
       - For password enter your *Private key*
       - ![composer-pic-4](composer-pic-4.png)
+
+- Q: I encountered the error "An error has occurred during application run. See exception log for details." How can I resolve this?**
+  - Answer: This error might pop up due to OPCACHE. Here's how you can tackle it:
+
+    First things first, try these quick fixes:
+    - Restarting the server often does the trick.
+    - Clean and flush the Magento cache by running:
+      ```bash
+      php bin/magento cache:clean
+      php bin/magento cache:flush
+      ```
+    - Recompile Magento Dependency Injection (DI) by running:
+      ```bash
+      php bin/magento setup:di:compile
+      ```
+
+    If you're still seeing the error after these steps, try this:
+    1. Delete the `generated/code` folder.
+    2. Repeat the cache cleaning and DI compilation steps mentioned above.
+
+    If the issue persists, please contact us.
 
 
 # Troubleshooting
