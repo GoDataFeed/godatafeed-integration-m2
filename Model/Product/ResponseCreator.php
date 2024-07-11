@@ -371,16 +371,21 @@ class ResponseCreator implements ResponseCreatorInterface
                 if ($aType === 'price') { // Get the price and the final price (after discounts)
                     $attributeValue = $product->getData($attributeName);
                     $productData[$attributeName] = is_null($attributeValue) ? '' : number_format($attributeValue, '2', '.', '');
-                } else if ($aType === 'text' || $aType === 'textarea' || $aType === 'date') {
+                }
+
+
+                if ($aType === 'text' || $aType === 'textarea' || $aType === 'date') {
                     $attributeValue = $product->getData($attributeName);
                     $productData[$attributeName] = $attributeValue;
-                } else if ($attributeName != 'quantity_and_stock_status') {
+                }
+
+                if (
+                    in_array($aType, ['select', 'multiselect', 'boolean', 'swatch_visual', 'swatch_text']) &&
+                    $attributeName != 'quantity_and_stock_status'
+                ) {
                     $attributeValue = $product->getAttributeText($attributeName);
                     $productData[$attributeName] = is_object($attributeValue) ? (string)$attributeValue : $attributeValue;
                 }
-
-                // in_array($aType, ['select', 'multiselect', 'boolean', 'swatch_visual', 'swatch_text']) && $attributeName != 'quantity_and_stock_status'
-
             } catch (Exception $e) {
                 $this->logger->critical('GoDataFeed Error message', ['exception' => $e]);
             }
